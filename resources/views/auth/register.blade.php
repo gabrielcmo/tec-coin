@@ -45,7 +45,9 @@
                                 <select class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" name="role" value="{{ old('role') }}" required>
                                     <option value="0">Administrador</option>
                                     <option value="1">Usuário</option>
-                                    <option value="2">Vendedor</option>
+                                    <option value="2">Cantina</option>
+                                    <option value="3">Xerox</option>
+                                    <option value="4">Lojinha</option>
                                 </select>
                             </div>
                         </div>
