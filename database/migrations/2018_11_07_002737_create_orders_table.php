@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('seller_id')->unsigned();
             $table->foreign('seller_id')->references('id')->on('users');
+            $table->integer('status_id')->unsigned();
+            $table->foreign('status_id')->references('id')->on('order_status');
             $table->integer('value');
             $table->timestamps();
         });
