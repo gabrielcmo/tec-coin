@@ -40,15 +40,22 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Tipo') }}</label>
+                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Tipo') }}</label>
                             <div class="col-md-6">
-                                <select class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" name="role" value="{{ old('role') }}" required>
+                                <select class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}" name="role" value="{{ old('role') }}" name="role" value="{{ old('role') }}" required>
                                     <option value="0">Administrador</option>
                                     <option value="1">Usuário</option>
                                     <option value="2">Cantina</option>
                                     <option value="3">Xerox</option>
                                     <option value="4">Lojinha</option>
                                 </select>
+
+                                 @if ($errors->has('role'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('role') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
 

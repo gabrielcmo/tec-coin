@@ -60,8 +60,21 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['required', 'min:0', 'max:4'],
+            'role' => ['required', 'numeric', 'min:0', 'max:4'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ],
+        [
+            'name.required' => 'Favor preencher o campo nome.',
+            'role.numeric' => 'Favor escolher um tipo de usuário válido.',
+            'role.min' => 'Favor escolher um tipo de usuário válido.',
+            'role.max' => 'Favor escolher um tipo de usuário válido.',
+            'role.required' => 'Favor escolher um tipo de usuário válido.',
+            'email.unique' => 'Este email já foi cadastrado. Favor escolher outro.',
+            'email.required' => 'Favor preencher o campo e-mail',
+            'email.max' => 'O e-mail não pode ter mais do que 255 caracteres',
+            'email.email' => 'O campo e-mail precisa ser um e-mail válido',
+            'password.required' => 'O campo senha é obrigatório',
+            'password.min' => 'A senha deve ter no mínimo 6 caracteres'
         ]);
     }
 
