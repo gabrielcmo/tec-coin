@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 
-class UserController extends Controller
+class BuyerController extends Controller
 {
     public function products()
     {
@@ -14,13 +14,28 @@ class UserController extends Controller
         $canteenProducts = Product::where('type_id', Product::$TYPE_CANTEEN)->get();
         
         return redirect("user.products")->with(
-            ["storeProducts" => $storeProducts, "storeProducts" => $storeProducts, "storeProducts" => $storeProducts]
+            ["storeProducts" => $storeProducts, "xeroxProducts" => $xeroxProducts, "canteenProducts" => $canteenProducts]
         );
     }
     
     public function balance()
     {
         return redirect("user.balance");
+    }
+
+    public function orderProduct($id)
+    {
+        // Fazer um pedido pelo id do produto
+    }
+
+    public function profile()
+    {
+        // Chamar a tela de edição de perfil
+    }
+
+    public function updateProfile()
+    {
+        // Atualizar dados do perfil do usuário
     }
     
     public function orders()
