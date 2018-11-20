@@ -13,10 +13,10 @@ class AdminController extends Controller
         $users = UserModel::where('role', UserModel::$TYPE_BUYER)->get();
         return redirect("admin.users")->with("users", $users);
     }
-    
+
     public function sellers()
     {
-        $sellers = User::were(['role' => '2', 'role' => '3', 'role' => '4'])->get();
+        $sellers = User::where(['role' => '2', 'role' => '3', 'role' => '4'])->get();
         return redirect()->with("users", $users);
     }
 

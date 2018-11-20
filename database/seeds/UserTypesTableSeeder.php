@@ -20,7 +20,13 @@ class UserTypesTableSeeder extends Seeder
         ]);
 
         DB::table('user_types')->insert([
-            'name' => 'Vendedor'
+            'name' => 'Cantina'
+        ]);
+        DB::table('user_types')->insert([
+            'name' => 'Xerox'
+        ]);
+        DB::table('user_types')->insert([
+            'name' => 'Lojinha'
         ]);
     }
 }
