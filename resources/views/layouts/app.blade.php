@@ -46,7 +46,7 @@
                            
                         @else
 
-                            @if (Auth::user()->role == 0)
+                            @if (Auth::user()->user_type_id == 0)
 
                                  <li class="nav-item">
                                     @if (Route::has('register'))
