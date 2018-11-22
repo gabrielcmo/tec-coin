@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>TecCoin</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -46,10 +46,11 @@
 
             .title {
                 font-size: 84px;
+                color: #FFF;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #FFF;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -62,8 +63,9 @@
                 margin-bottom: 30px;
             }
         </style>
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
-    <body>
+    <body class="roxo-1">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -76,7 +78,8 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">Tec-Coin</div>
+                <img src="{{url('/images/logo.png')}}" width="110" height="110" alt="">
+                <div class="title m-b-md">TecCoin</div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Sobre</a>
