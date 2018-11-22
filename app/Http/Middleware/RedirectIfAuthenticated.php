@@ -17,7 +17,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (!Auth::check() || Auth::user()->user_type_id != 0) {
+        if (!Auth::check() || Auth::user()->user_type_id != 1) {
             // Redirecionar para tela de VOCÊ NÃO TEM PERMISSÃO
             return redirect('/login');
         } else {

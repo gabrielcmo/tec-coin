@@ -6,9 +6,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // admin
 Route::get('/register/mass', 'AdminController@massRegister');
-Route::get('/buyers', 'AdminController@buyers');
+Route::get('/buyers', 'AdminController@buyers')->name('buyers');;
 Route::post('/buyers/deposit', 'AdminController@deposit');
-Route::get('/sellers', 'AdminController@sellers');
+Route::get('/sellers', 'AdminController@sellers')->name('sellers');
 Route::delete('/user/{id}', 'AdminController@destroyUser');
 // Listar produtos
 // Deletar produtos
