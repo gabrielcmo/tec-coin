@@ -22,7 +22,7 @@ class BuyerController extends Controller
 
     public function balance()
     {
-        return redirect("user.balance");
+        return redirect("buyer.balance");
     }
 
     public function orderProduct($idbuyer , $idproduct , $idseller)
@@ -40,7 +40,7 @@ class BuyerController extends Controller
     public function profile()
     {
         // Chamar a tela de edição de perfil
-        view('user.editprofile');
+        return view('buyer.edit_profile');
     }
 
     public function updateProfile(Request $r, $id)
@@ -55,6 +55,6 @@ class BuyerController extends Controller
 
     public function orders()
     {
-        return redirect("user.orders");
+        return redirect("buyer.orders");
     }
 }

@@ -17,3 +17,9 @@
 .vert-center{
     margin-top: 10%
 }
+
+.btn-purple{
+    color:#fff;
+    background-color:#673bB7;
+    border-color:#673bB7
+}

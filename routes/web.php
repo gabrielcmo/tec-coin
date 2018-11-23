@@ -17,7 +17,7 @@ Route::delete('/user/{id}', 'AdminController@destroyUser');
 Route::get('/buyers/products', 'BuyerController@products')->name('buyerproducts');
 Route::get('/buyers/balances', 'BuyerController@balance')->name('balance');
 Route::post('/products/order/{id}', 'BuyerController@orderProduct');
-Route::get('/user/profile', 'BuyerController@profile');
+Route::get('/user/profile', 'BuyerController@profile')->name('profileform');
 Route::put('/user/profile/update', 'BuyerController@updateProfile');
 
 // seller

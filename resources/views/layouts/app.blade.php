@@ -92,12 +92,14 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <span class="dropdown-item-text">
+                            <a href="{{ route('profileform') }}">
                             <div class="row">
                                 <img width="30px" height="30px" src="https://static.thenounproject.com/png/20344-200.png" class="rounded-circle">
                                 <div class="margin-dp">
                                     <strong>{{ Auth::user()->name }}</strong><br>
                                 </div>
                             </div>
+                            </a>
                         </span>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
