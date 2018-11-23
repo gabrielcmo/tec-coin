@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BalancesTableSeeder extends Seeder
+class DepositsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class BalancesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('balances')->insert([
+        DB::table('deposits')->insert([
             'buyer_id' => '1',
             'admin_id' => '1',
             'description' => 'Tirou MB em todas as matérias',
@@ -19,7 +19,7 @@ class BalancesTableSeeder extends Seeder
             "date" => now()
         ]);
 
-        DB::table('balances')->insert([
+        DB::table('deposits')->insert([
             'buyer_id' => '1',
             'admin_id' => '1',
             'description' => 'Tirou MB em todas as matérias',
@@ -28,7 +28,7 @@ class BalancesTableSeeder extends Seeder
         ]);
 
 
-        DB::table('balances')->insert([
+        DB::table('deposits')->insert([
             'buyer_id' => '1',
             'admin_id' => '1',
             'description' => 'Tirou MB em todas as matérias',
@@ -37,7 +37,7 @@ class BalancesTableSeeder extends Seeder
         ]);
 
 
-        DB::table('balances')->insert([
+        DB::table('deposits')->insert([
             'buyer_id' => '1',
             'admin_id' => '1',
             'description' => 'Tirou MB em todas as matérias',
