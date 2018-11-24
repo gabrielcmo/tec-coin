@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 use App\Order;
 use App\Seller;
 use App\Buyer;
@@ -12,13 +13,29 @@ use App\Product;
 
 class SellerController extends Controller
 {
+    public function type_id_userProduct($id){
+        if($id == 3){
 
-    public function products($id)
+            $sellerID = 1;
+        }elseif($id == 4){
+
+            $sellerID = 2;
+        }elseif($id == 5){
+
+            $sellerID = 3;
+        }else{
+            return false;
+        }
+
+        return $sellerID;
+    }
+
+    public function products()
     {
-        // Buscar todos os produtos do tipo de vendedor logado
-        // Comment: Não tem nada ligando os produtos com o vendendo
-        // e chamar a view de listagem de produtos (passandos esses produtos)
-        return view('listproduct')->with('listproducts');
+        $id = Auth::user()->user_type_id;
+        $listproducts = Product::where("type_id", SellerController::type_id_userProduct($id))->get();
+
+        return view('seller.listproduct')->with(compact('listproducts'));
     }
 
     public function editProduct()
@@ -49,7 +66,7 @@ class SellerController extends Controller
     public function createProduct()
     {
         // Devolver form de cadastro de produtos
-        return view('productregister');
+        return view('seller.productregister');
     }
 
     public function storeProduct(Request $r)
@@ -58,10 +75,14 @@ class SellerController extends Controller
         $product = new Product;
         $product->name = $r['name'];
         $product->value = $r['value'];
-        $product->description = $r=['description'];
-        $product->type_id = $r['type'];
-        //Criar uma classe para validar a extensão da imagem?
-        $product->image = $r=['image'];
+        $product->description = $r['description'];
+        $product->type_id = $r['type_id'];
+        $file = $r->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move('images', $filename);
+        $product->image = $filename;
+        $product->save();
+        
         return view('home');
     }
 

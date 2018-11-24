@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="email" class="form-control" id="nome" aria-describedby="nome" placeholder="Nome novo" value="{{ Auth::user()->name }}">
+                    <input type="text" class="form-control" id="nome" aria-describedby="nome" placeholder="Nome novo" value="{{ Auth::user()->name }}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -25,9 +25,9 @@
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="senha" class="form-control" id="senha" placeholder="Nova senha">
+                    <input type="password" name="senha" class="form-control" id="senha" placeholder="Nova senha">
                     <br>
-                    <input type="senhaConf" class="form-control" id="senhaConf" placeholder="Confirmar senha">
+                    <input type="password" class="form-control" id="senhaConf" placeholder="Confirmar senha">
                 </div>
             </div>
             <div class="col-md-6 text-center">
