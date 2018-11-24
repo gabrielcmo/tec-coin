@@ -17,17 +17,26 @@
                 <th>Tipo ID</th>
                 <th>Valor</th>
                 <th>Descrição</th>
+                <th>Editar</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($listproducts as $item)
                 <tr>
-                    <td><img src="/images/{{ $item->image }}" width="59" height="59" alt=""></td>
+                    <td><img src="{{ url("images/$item->image") }}" width="59" height="59" alt=""></td>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->type_id }}</td>
                     <td>{{ $item->value }}</td>
                     <td>{{ $item->description }}</td>
+                    <td>
+                        <a href="products/{{ $item->id }}"><img src="{{ url('images/delete.png') }}" height="20" width="20" alt=""></a>
+                        <form action="/seller/products/edit" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $item->id }}">
+                            <button type="submit"><img src="{{ url('images/edit.png') }}" height="20" width="20" alt=""></button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

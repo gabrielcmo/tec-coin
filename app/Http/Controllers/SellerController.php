@@ -41,7 +41,7 @@ class SellerController extends Controller
     public function editProduct()
     {
         //Chamar a view de produtos
-        return view ('editproduct');
+        return view ('seller.editproduct');
     }
 
     public function updateProduct(Request $r , $id)
