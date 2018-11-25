@@ -49,16 +49,13 @@ class AdminController extends Controller
         $user_select = DB::table('User')->where('id', $id)->value('user_type_id');
         switch ($user_select) {
             case 1:
-            Admin::where('user_id', $id)->delete();
+                Admin::where('user_id', $id)->delete();
+                break;
             case 2:
-            Buyer::where('user_id', $id)->delete();
-            case 3:
-            Seller::where('user_id',$id)->delete();
-            case 4:
-            Seller::where('user_id',$id)->delete();
-            case 5:
-            Seller::where('user_id',$id)->delete();
-            break;
+                Buyer::where('user_id', $id)->delete();
+                break;
+            default:
+                Seller::where('user_id',$id)->delete();
         }
         // Remover os dados da tabela usuário
             User::where('id',$id)->delete();

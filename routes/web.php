@@ -21,6 +21,9 @@ Route::get('/buyer/balance', 'BuyerController@balance')->name('balance');
 Route::post('/products/order', 'BuyerController@orderProduct');
 Route::get('/user/profile', 'BuyerController@profile')->name('profileform');
 Route::put('/user/profile/update', 'BuyerController@updateProfile');
+Route::get('/user/view/profile/', function(){
+    return view('buyer.profile');
+})->name('profile');
 
 // seller
 Route::get('/seller/products', 'SellerController@products')->name('sellerproducts');

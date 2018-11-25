@@ -3,9 +3,10 @@
 @section('content')
 
 <div class="container">
+    <?php $product = app(App\Product::class)->where('id', $_POST["id"])->first(); ?>
     <br>
     <div>
-        <h1 class="display-4"><strong>Registrar produto</strong></h1>
+        <h1 class="display-4"><strong>Editar produto</strong></h1>
         <hr>
     </div>
     <br>
@@ -14,24 +15,25 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="nome">Nome</label>
-                        <input type="text" name="name" class="form-control" id="nome" aria-describedby="nome" placeholder="Computador">
+                    <input type="text" name="name" class="form-control" id="nome" aria-describedby="nome" placeholder="{{ $product->name }}">
                     </div>
                     <input type="hidden" name="type_id" value="{{ app(App\Http\Controllers\SellerController::class)->type_id_userProduct(Auth::user()->user_type_id) }}">
                     <div class="form-group">
                         <label for="valor">Valor</label>
-                        <input type="number" name="value" class="form-control" id="valor" aria-describedby="valor" placeholder="1000">
+                        <input type="number" name="value" class="form-control" id="valor" aria-describedby="valor" placeholder="{{ $product->value }}">
                     </div>
                     <div class="form-group">
                         <label for="desc">Descrição</label>
-                        <input type="text" name="description" class="form-control" id="desc" placeholder="Lojinha">
+                        <input type="text" name="description" class="form-control" id="desc" placeholder="{{ $product->description }}">
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
+                    <img class="rounded-circle" src="{{ url("images/$product->image") }}" height="200" width="200" alt="">
                     <br><br>
                     <input type="file" name="image" id="foto">
                 </div>
             </div>
-            <button type="submit" class="btn btn-purple text-light">Registrar</button>
+            <button type="submit" class="btn btn-purple text-light">Editar</button>
         {{ csrf_field() }}
     </form>
 </div>

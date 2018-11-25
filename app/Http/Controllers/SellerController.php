@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 use App\Order;
 use App\Seller;
 use App\Buyer;
@@ -11,23 +12,27 @@ use App\Product;
 
 class SellerController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
     }
-    public function products($id)
+    public function type_id_userProduct($id){
+        if($id == 3){
+
+        }
+
+    }
+    public function products()
     {
-        // Buscar todos os produtos do tipo de vendedor logado
-        // Comment: Não tem nada ligando os produtos com o vendendo
-        // e chamar a view de listagem de produtos (passandos esses produtos)
-        return view('listproduct')->with('listproducts');
+        $id = Auth::user()->user_type_id;
+        $listproducts = Product::where("type_id", SellerController::type_id_userProduct($id))->get();
+        return view('seller.listproduct')->with(compact('listproducts'));
     }
 
     public function editProduct()
     {
         //Chamar a view de produtos
-        return view ('editproduct');
+        return view ('seller.editproduct');
     }
 
     public function updateProduct(Request $r , $id)
@@ -61,38 +66,45 @@ class SellerController extends Controller
         $product = new Product;
         $product->name = $r['name'];
         $product->value = $r['value'];
-        $product->description = $r=['description'];
-        $tipo = $r['type_id'];
-        echo $tipo;
-        die();
+        $product->description = $r['description'];
         $product->type_id = $r['type_id'];
-        //Criar uma classe para validar a extensão da imagem?
-        $product->image = 'example.png';
+        $file = $r->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move('images', $filename);
+        $product->image = $filename;
         $product->save();
         return view('home');
     }
 
-    public function pendingOrders($id)
+    public function pendingOrders()
     {
+        $arrayIdProduct = array();
+        $idseller = Seller::where('user_id', Auth::user()->id)->value('id');
         // Buscar todos os pedidos pendentes do tipo do vendedor logado
-        $idseller = User::where('id', $id)->value('id');
-        $all_idproduct_in_order = Order::where('idseller', $idseller)->value('product_id')->get();
-        $all_order = Order::where('idseller', $idselle)->get();
+        // Pegando o ID de todos os produtos
+        $all_idproduct_in_order = Order::select('product_id as id')->where('seller_id', $idseller)->where('status_id', 1)->get();
+        foreach($all_idproduct_in_order as $id) {
+            $arrayIdProduct[] = $id['id'];
+        }
+        $result = array_unique($arrayIdProduct);
+        $all_order = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
         //Não sei se isso vai funcionar...
         $all_products = Product::whereIn('id', $all_idproduct_in_order)->get();
         // Exibir a tela de listagem de pedidos pendentes
-        return view('listorder')->compact('all_order','all_products');
+        return view('seller.listorder', compact('all_order','all_products'));
     }
 
-    public function acceptOrder($id)
+    public function acceptOrder()
     {
+        $id = Seller::where('user_id', Auth::user()->id)->value('id');
         // Aprovar um pedido
         Order::where('seller_id',$id)->update(['status_id' => 2]);
         return view('home');
     }
 
-    public function denyOrder($id)
+    public function denyOrder()
     {
+        $id = Seller::where('user_id', Auth::user()->id)->value('id');
         // Recusar um pedido
         Order::where('seller_id',$id)->update(['status_id' => 3]);
     }
