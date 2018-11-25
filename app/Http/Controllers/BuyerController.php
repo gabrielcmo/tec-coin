@@ -46,14 +46,22 @@ class BuyerController extends Controller
         return view('buyer.edit_profile');
     }
 
-    public function updateProfile(Request $r, $id)
+    public function updateProfile(Request $r)
     {
+        $id = $r["id"];
+
+        $file = $r->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move('images', $filename);
+
         // Atualizar dados do perfil do usuário
         User::where('id', $id)->update(['name' => $r['name']]);
         User::where('id', $id)->update(['email' => $r['email']]);
+        User::where('id', $id)->update(['image' => $filename]);
         //Modificar também o tipo de usuário????
         /* User::where('id', $id)->update(['user_type' => $r['role']]); */
         // Remover e adicionar em sua respectiva tabela?
+        return view('home');
     }
 
     public function orders()

@@ -14,7 +14,7 @@
 
         <div align='center' class="col-8">
             <?php $img = Auth::user()->image ?>
-            <img src="{{ url("images/$img") }}" height="140" width="140" alt=""><br><br>
+            <img class="rounded-circle" src="{{ url("images/$img") }}" height="140" width="140" alt=""><br><br>
         </div>
 
         <div class="col-6">

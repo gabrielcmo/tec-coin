@@ -5,29 +5,30 @@
 <div class="container">
     <br>
     <div>
-        <h1 class="display-4"><strong>Alterar dados</strong></h1>
+        <h1 class="display-4"><strong>Editar perfil</strong></h1>
         <hr>
     </div>
     <br>
-    <form method="POST" action="/user/profile/update">
+    <form method="POST" enctype="multipart/form-data" action="/user/profile/update">
         @csrf
         {{ method_field('PUT') }}
         <div class="row">
             <div class="col-md-6">
+            <input type="hidden" name="id" value="{{ Auth::user()->id }}">
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" aria-describedby="nome" placeholder="Nome novo" value="{{ Auth::user()->name }}">
+                    <input type="text" name="name" class="form-control" id="nome" aria-describedby="nome" placeholder="Nome novo" value="{{ Auth::user()->name }}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"  value="{{ Auth::user()->email }}">
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"  value="{{ Auth::user()->email }}">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha</label>
                     <input type="password" name="senha" class="form-control" id="senha" placeholder="Nova senha">
                     <br>
-                    <input type="password" class="form-control" id="senhaConf" placeholder="Confirmar senha">
+                    <input type="password" name="password" class="form-control" id="senhaConf" placeholder="Confirmar senha">
                 </div>
             </div>
             <div class="col-md-6 text-center">
@@ -35,7 +36,7 @@
                 <img class="rounded-circle" src="{{ url("images/$img") }}" height="200" width="200"
                     alt="">
                     <br><br>
-                <input type="file" name="foto" id="foto">
+                <input type="file" name="image" id="foto">
             </div>
         </div>
         <button type="submit" class="btn btn-purple text-light">Atualizar</button>
