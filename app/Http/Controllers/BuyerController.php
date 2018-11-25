@@ -7,9 +7,10 @@ use App\Product;
 use App\Buyer;
 use App\User;
 use App\Order;
-use App\Balance;
-use Illuminate\Foundation\Auth\User;
+use App\Deposit;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Support\Facades\Auth;
+use App\ExtractRecord;
 class BuyerController extends Controller
 {
     public function products()
@@ -26,13 +27,11 @@ class BuyerController extends Controller
     public function balance()
     {
         // Pegar todos os valores que foram adicionados à conta do comprador (usuário logado)
-
         $loggedBuyer = Buyer::where("user_id", Auth::user()->id)->first();
-
-        $extract = Balance::where("", $loggedBuyer->id)->get();
+        $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
 
         // Pegar todas as compras realizadas por esse usuário cujo status seja igual a (1) Ordered ou 2 (Accepted)
-        $orders = "";
+        $orders = Order::where(["buyer_id" => $loggedBuyer->id, "status_id" => 1, "status_id" => 2])->get();
         
         /* Mergear os dois arrays em um único array com o seguinte padrão:
 
@@ -48,14 +47,12 @@ class BuyerController extends Controller
             date:14/11/2018
             type:entrada
         */
-        $displayExtract = self::toDisplayExtract($orders, $extract);
-        dd($displayExtract);
+        $displayExtract = self::toExtract($orders, $deposits);
 
-        
         // Pegar o saldo do usuário
-        $balance = self::toBalance($orders, $extract);
-
-        return view("buyer.balance")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
+        $balance = self::toBalance($orders, $deposits);
+        
+        return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
     }
 
     public function orderProduct($idbuyer , $idproduct , $idseller)
@@ -68,7 +65,8 @@ class BuyerController extends Controller
         $order->seller_id = $idseller;
         $order->status_id = 1;
         $order->value = $value;
-        $order->save();    }
+        $order->save();
+    }
 
     public function profile()
     {
@@ -91,28 +89,31 @@ class BuyerController extends Controller
         return redirect("buyer.orders");
     }
 
-    private function toDisplayExtract($orders, $extracts) {
-        $displayExtract =  [
-            ['value' => 50, 'description' => "Melhor nota da turma", 'type' => "entrada", 'date' => "14/11/2018"],
-            ['value' => 5, 'description' => "Compra de Coxinha", 'type' => "saida", 'date' => "11/11/2018"],
-            ['value' => 3, 'description' => "Compra de Xerox", 'type' => "saida", 'date' => "12/11/2018"]
-        ];
+    private function toExtract($orders, $deposits) {
 
-        usort($displayExtract, function($a, $b) {
+        foreach ($orders as $order) {   
+            $extractArray[] = new ExtractRecord($order->value, $order->description(), $order->created_at, "order");
+        }
+        
+        foreach ($deposits as $deposit) {
+            $extractArray[] = new ExtractRecord($deposit->value, $deposit->description, $deposit->created_at, "deposit");
+        }
+        
+        usort($extractArray, function($a, $b) {
             return strcmp($a->date, $b->date);
         });
 
-        return $displayExtract;
+        return $extractArray;
     }
 
-    public function toBalance($orders, $extracts) {
+    public function toBalance($orders, $deposits) {
         $balance = 0;
         foreach ($orders as $order) {
-            $balance += $order->value;
+            $balance -= $order->value;
         }
         
-        foreach ($extracts as $extract) {
-            $balance -= $extract->value;
+        foreach ($deposits as $deposit) {
+            $balance += $deposit->value;
         }
 
         return $balance;

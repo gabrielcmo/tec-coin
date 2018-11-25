@@ -61,7 +61,7 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('balance') }}">Saldo</a>
+                        <a class="nav-link" href="{{ route('balance') }}">Extrato</a>
                     </li>
 
                 @elseif (Auth::user()->user_type_id == 3)

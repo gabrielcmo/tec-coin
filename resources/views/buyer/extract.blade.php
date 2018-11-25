@@ -22,7 +22,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-danger">
+
+                    @foreach ($displayExtract as $extractItem)
+                        <tr class="{{ $extractItem->type == 'order'  ?  'table-danger'  :  'table-success' }}">
+                            <td>{{ $extractItem->type == 'order'  ?  'Compra'  :  'Depósito' }}</td>
+                            <td>{{ $extractItem->value }} TCs</td>
+                            <td>{{ $extractItem->description }}</td>
+                            <td>{{ $extractItem->date }}</td>
+                        </tr>
+                    @endforeach
+
+                    <!--tr class="table-danger">
                         <th scope="row"><i class="material-icons"> expand_more </i></th>
                         <td>30 TCs</td>
                         <td>Coxinha</td>
@@ -33,7 +43,7 @@
                         <td>100 TCs</td>
                         <td>Zerou o jogo lá</td>
                         <td>22/07</td>
-                    </tr>
+                    </tr-->
                 </tbody>
             </table>
         </div>

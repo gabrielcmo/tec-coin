@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Balance extends Model
+class Deposit extends Model
 {
     protected $fillable = ['value', 'buyer_id', 'admin_id', 'date', 'description'];
 
