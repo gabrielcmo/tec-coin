@@ -10,7 +10,7 @@
                 <p class="lead">Confira aqui suas transações</p>
                 <hr>
             </div>
-            <h6>Total: {{ $balance }} TCs</h6>
+            <h6><strong> Total: {{ $balance }} TCs</strong></h6>
             <br>
             <table class="table">
                 <thead>
