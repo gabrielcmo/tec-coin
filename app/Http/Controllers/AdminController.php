@@ -9,18 +9,20 @@ use App\Admin;
 use App\Balance;
 use App\Buyer;
 use App\Seller;
+
+
 class AdminController extends Controller
 {
     public function buyers()
     {
         $users = UserModel::where('user_type_id', UserModel::$TYPE_BUYER)->get();
-        return redirect("admin.users")->with("users", $users);
+        return view("admin.users" , compact('users'));
     }
 
     public function sellers()
     {
-        $sellers = User::where(['user_type_id' => '2', 'user_type_id' => '3', 'user_type_id' => '4'])->get();
-        return redirect()->with("users", $users);
+        $sellers = User::where('user_type_id', 3)->orWhere('user_type_id', 4)->orWhere('user_type_id', 5)->get();
+        return view('admin.AllSellers', compact('sellers'));
     }
 
     public function deposit(Request $r)
@@ -67,6 +69,11 @@ class AdminController extends Controller
 
     public function massRegister()
     {
-        return redirect("admin.massregister")->with("users", $users);
+        $users = 0;
+        return view("admin.massregister")->with("users", $users);
+    }
+    public function listAllUsers() {
+        $AllUsers = User::where('user_type_id', 2)->get();
+        return view ('admin.allUser' , compact('AllUsers'));
     }
 }

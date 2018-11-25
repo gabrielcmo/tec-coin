@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\User;
 use App\Order;
@@ -13,6 +12,10 @@ use App\Product;
 class SellerController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function products($id)
     {
         // Buscar todos os produtos do tipo de vendedor logado
@@ -49,7 +52,7 @@ class SellerController extends Controller
     public function createProduct()
     {
         // Devolver form de cadastro de produtos
-        return view('productregister');
+            return view('seller.productregister');
     }
 
     public function storeProduct(Request $r)
@@ -59,16 +62,20 @@ class SellerController extends Controller
         $product->name = $r['name'];
         $product->value = $r['value'];
         $product->description = $r=['description'];
-        $product->type_id = $r['type'];
+        $tipo = $r['type_id'];
+        echo $tipo;
+        die();
+        $product->type_id = $r['type_id'];
         //Criar uma classe para validar a extensão da imagem?
-        $product->image = $r=['image'];
+        $product->image = 'example.png';
+        $product->save();
         return view('home');
     }
 
     public function pendingOrders($id)
     {
         // Buscar todos os pedidos pendentes do tipo do vendedor logado
-        $idseller = User::where('id', $id)->value('id')->get();
+        $idseller = User::where('id', $id)->value('id');
         $all_idproduct_in_order = Order::where('idseller', $idseller)->value('product_id')->get();
         $all_order = Order::where('idseller', $idselle)->get();
         //Não sei se isso vai funcionar...

@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    
+
 </head>
 <body class="roxo-2">
 <div id="app">
@@ -28,7 +28,7 @@
             <img src="{{url('/images/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt="">
             {{ config('app.name', 'TecCoin') }}
         </a>
-       
+
         <div class="collapse navbar-collapse" id="navbarText">
 
             @guest
@@ -46,20 +46,20 @@
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Cadastro') }}</a>
                         @endif
                     </li>
-                    
+
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('buyers') }}">Compradores</a>
+                        <a class="nav-link" href="{{ ('/users') }}">Compradores</a>
                     </li>
-                    
+
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('sellers') }}">Vendedores</a>
+                        <a class="nav-link" href="{{ ('/sellers') }}">Vendedores</a>
                     </li>
                 @elseif (Auth::user()->user_type_id == 2)
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('buyerproducts') }}">Produtos</a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('balance') }}">Saldo</a>
                     </li>
@@ -74,7 +74,7 @@
                             aria-haspopup="true" aria-expanded="false">
                             Produtos
                         </a>
-                        
+
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('productsregister') }}">Cadastro</a>
                             <a class="dropdown-item" href="{{ route('sellerproducts') }}">Listagem</a>

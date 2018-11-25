@@ -7,6 +7,8 @@ use App\Product;
 use App\Buyer;
 use App\User;
 use App\Order;
+use App\Seller;
+use Auth;
 class BuyerController extends Controller
 {
     public function products()
@@ -15,27 +17,42 @@ class BuyerController extends Controller
         $xeroxProducts = Product::where('type_id', Product::$TYPE_XEROX)->get();
         $canteenProducts = Product::where('type_id', Product::$TYPE_CANTEEN)->get();
 
-        return redirect("user.products")->with(
-            ["storeProducts" => $storeProducts, "xeroxProducts" => $xeroxProducts, "canteenProducts" => $canteenProducts]
-        );
+        return view("buyer.products" , compact('storeProducts', 'xeroxProducts' , 'canteenProducts'));
     }
 
     public function balance()
     {
-        return redirect("buyer.balance");
+        if (Auth::user()->id != 2){
+            return view('home');
+        }
+        else {
+            $balance = Buyer::where('user_id',Auth::user()->id)->value('balance');
+            return view("buyer.balance")->with('balance',$balance);
+        }
+
     }
 
-    public function orderProduct($idbuyer , $idproduct , $idseller)
+    public function orderProduct(Request $r)
     {
+        $iduser = Auth::user()->id;
+        $valueUser = Buyer::where('user_id', $iduser)->value('balance');
+        $value = Product::where('id' , $r['id'])->value('value');
+        if ($valueUser < $value) {
+            return view('buyer.error');
+        }
+        $iduser = Auth::user()->id;
+        $idbuyer = Buyer::where('user_id', $iduser)->value('id');
         // Fazer um pedido pelo id do produto
-        $value = Product::where('id' , $idproduct)->value('value')->get();
+        $idseller = Seller::where('product_type_id', $r['id_product'])->value('id');
         $order = new Order;
-        $order->product_id = $idproduct;
+        $order->product_id = $r['id'];
         $order->buyer_id = $idbuyer;
         $order->seller_id = $idseller;
         $order->status_id = 1;
         $order->value = $value;
-        $order->save();    }
+        $order->save();
+        return view('home');
+    }
 
     public function profile()
     {
@@ -43,11 +60,12 @@ class BuyerController extends Controller
         return view('buyer.edit_profile');
     }
 
-    public function updateProfile(Request $r, $id)
+    public function updateProfile(Request $r)
     {
+        $iduser = Auth::user()->id;
         // Atualizar dados do perfil do usuário
-        User::where('id', $id)->update(['name' => $r['name']]);
-        User::where('id', $id)->update(['email' => $r['email']]);
+        User::where('id', $iduser)->update(['name' => $r['name']]);
+        User::where('id', $iduser)->update(['email' => $r['email']]);
         //Modificar também o tipo de usuário????
         /* User::where('id', $id)->update(['user_type' => $r['role']]); */
         // Remover e adicionar em sua respectiva tabela?
@@ -55,6 +73,11 @@ class BuyerController extends Controller
 
     public function orders()
     {
-        return redirect("buyer.orders");
+        return view("buyer.orders");
+    }
+    public function historic() {
+    $idbuyer= Buyer::where('user_id', Auth::user()->id)->value('id');
+    $historic = Order::where('buyer_id', $idbuyer)->get();
+    return view('buyer.historic', compact('historic'));
     }
 }
