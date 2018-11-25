@@ -66,6 +66,6 @@ class BuyerController extends Controller
 
     public function orders()
     {
-        return redirect("buyer.orders");
+        return view("buyer.orders");
     }
 }
