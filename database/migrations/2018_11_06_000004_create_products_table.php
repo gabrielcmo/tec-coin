@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('type_id')->unsigned();
-            $table->foreign('type_id')->references('id')->on('product_types');
+            $table->foreign('type_id')->references('id')->on('product_types')->onDelete('cascade');
             $table->integer('value');
             $table->string('description')->unique();
             $table->string('image');

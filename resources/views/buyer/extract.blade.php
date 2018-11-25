@@ -10,7 +10,7 @@
                 <p class="lead">Confira aqui suas transações</p>
                 <hr>
             </div>
-            <h6>Total: 100 TCs</h6>
+            <h6>Total: {{ $balance }} TCs</h6>
             <br>
             <table class="table">
                 <thead>
@@ -22,31 +22,16 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach ($displayExtract as $extractItem)
-                        <tr class="{{ $extractItem->type == 'order'  ?  'table-danger'  :  'table-success' }}">
+                        <tr class="{{ $extractItem->type == 'order' ? 'table-danger' : 'table-success' }}">
                             <td>{{ $extractItem->type == 'order'  ?  'Compra'  :  'Depósito' }}</td>
                             <td>{{ $extractItem->value }} TCs</td>
                             <td>{{ $extractItem->description }}</td>
                             <td>{{ $extractItem->date }}</td>
                         </tr>
                     @endforeach
-
-                    <!--tr class="table-danger">
-                        <th scope="row"><i class="material-icons"> expand_more </i></th>
-                        <td>30 TCs</td>
-                        <td>Coxinha</td>
-                        <td>02/10</td>
-                    </tr>
-                    <tr class="table-success">
-                        <th scope="row"><i class="material-icons"> expand_less </i></th>
-                        <td>100 TCs</td>
-                        <td>Zerou o jogo lá</td>
-                        <td>22/07</td>
-                    </tr-->
                 </tbody>
             </table>
         </div>
     </div>
-
 @endsection

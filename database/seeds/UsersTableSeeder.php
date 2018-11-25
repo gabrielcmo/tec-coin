@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'user_type_id' => 1,
+            'image' => 'imguser.png',
             'password' => bcrypt('123456'),
         ]);
 
@@ -23,6 +24,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'comprador',
             'email' => 'comprador@comprador.com',
             'user_type_id' => 2,
+            'image' => 'imguser.png',
             'password' => bcrypt('123456'),
         ]);
         
@@ -30,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'cantina',
             'email' => 'cantina@cantina.com',
             'user_type_id' => 3,
+            'image' => 'imguser.png',
             'password' => bcrypt('123456')
         ]);
         
@@ -37,6 +40,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'xerox',
             'email' => 'xerox@xerox.com',
             'user_type_id' => 3,
+            'image' => 'imguser.png',
             'password' => bcrypt('123456')
         ]);
             
@@ -44,6 +48,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'lojinha',
             'email' => 'lojinha@lojinha.com',
             'user_type_id' => 3,
+            'image' => 'imguser.png',
             'password' => bcrypt('123456')
         ]);
     }

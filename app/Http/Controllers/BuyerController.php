@@ -11,6 +11,8 @@ use App\Deposit;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Support\Facades\Auth;
 use App\ExtractRecord;
+use App\Seller;
+
 class BuyerController extends Controller
 {
     public function products()
@@ -19,12 +21,10 @@ class BuyerController extends Controller
         $xeroxProducts = Product::where('type_id', Product::$TYPE_XEROX)->get();
         $canteenProducts = Product::where('type_id', Product::$TYPE_CANTEEN)->get();
 
-        return redirect("user.products")->with(
-            ["storeProducts" => $storeProducts, "xeroxProducts" => $xeroxProducts, "canteenProducts" => $canteenProducts]
-        );
+        return view("buyer.products" , compact('storeProducts', 'xeroxProducts' , 'canteenProducts'));
     }
 
-    public function balance()
+    public function extract()
     {
         // Pegar todos os valores que foram adicionados à conta do comprador (usuário logado)
         $loggedBuyer = Buyer::where("user_id", Auth::user()->id)->first();
@@ -55,17 +55,27 @@ class BuyerController extends Controller
         return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
     }
 
-    public function orderProduct($idbuyer , $idproduct , $idseller)
+    public function orderProduct(Request $r)
     {
+        $iduser = Auth::user()->id;
+        $valueUser = Buyer::where('user_id', $iduser)->value('balance');
+        $value = Product::where('id' , $r['id'])->value('value');
+        
+        if ($valueUser < $value) return view('buyer.error');
+        
+        $iduser = Auth::user()->id;
+        $idbuyer = Buyer::where('user_id', $iduser)->value('id');
+
         // Fazer um pedido pelo id do produto
-        $value = Product::where('id' , $idproduct)->value('value')->get();
+        $idseller = Seller::where('product_type_id', $r['id_product'])->value('id');
         $order = new Order;
-        $order->product_id = $idproduct;
+        $order->product_id = $r['id'];
         $order->buyer_id = $idbuyer;
         $order->seller_id = $idseller;
         $order->status_id = 1;
         $order->value = $value;
         $order->save();
+        return view('home');
     }
 
     public function profile()
@@ -74,23 +84,35 @@ class BuyerController extends Controller
         return view('buyer.edit_profile');
     }
 
-    public function updateProfile(Request $r, $id)
+    public function updateProfile(Request $r)
     {
+        $id = Auth::user()->id;
+        $file = $r->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move('images', $filename);
+
         // Atualizar dados do perfil do usuário
         User::where('id', $id)->update(['name' => $r['name']]);
         User::where('id', $id)->update(['email' => $r['email']]);
+        User::where('id', $id)->update(['image' => $filename]);
         //Modificar também o tipo de usuário????
         /* User::where('id', $id)->update(['user_type' => $r['role']]); */
         // Remover e adicionar em sua respectiva tabela?
+        return view('home');
     }
 
     public function orders()
     {
-        return redirect("buyer.orders");
+        return view("buyer.orders");
+    }
+
+    public function historic() {
+        $idbuyer= Buyer::where('user_id', Auth::user()->id)->value('id');
+        $historic = Order::where('buyer_id', $idbuyer)->get();
+        return view('buyer.historic', compact('historic'));
     }
 
     private function toExtract($orders, $deposits) {
-
         foreach ($orders as $order) {   
             $extractArray[] = new ExtractRecord($order->value, $order->description(), $order->created_at, "order");
         }

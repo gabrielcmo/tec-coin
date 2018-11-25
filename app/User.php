@@ -10,9 +10,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public static $TYPE_ADMIN = "0";
-    public static $TYPE_BUYER = "1";
-    public static $TYPE_SELLER = "2";
+    public static $TYPE_ADMIN = "1";
+    public static $TYPE_BUYER = "2";
+    public static $TYPE_SELLER = "3";
 
     /**
      * The attributes that are mass assignable.
