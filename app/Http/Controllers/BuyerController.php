@@ -22,7 +22,7 @@ class BuyerController extends Controller
 
     public function balance()
     {
-        return redirect("buyer.balance");
+        return view("buyer.balance");
     }
 
     public function orderProduct($idbuyer , $idproduct , $idseller)
@@ -35,7 +35,10 @@ class BuyerController extends Controller
         $order->seller_id = $idseller;
         $order->status_id = 1;
         $order->value = $value;
-        $order->save();    }
+        $order->save();
+
+        return view('home');
+    }
 
     public function profile()
     {

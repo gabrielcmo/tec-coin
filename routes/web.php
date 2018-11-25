@@ -19,6 +19,9 @@ Route::get('/buyers/balances', 'BuyerController@balance')->name('balance');
 Route::post('/products/order/{id}', 'BuyerController@orderProduct');
 Route::get('/user/profile', 'BuyerController@profile')->name('profileform');
 Route::put('/user/profile/update', 'BuyerController@updateProfile');
+Route::get('/user/view/profile/', function(){
+    return view('buyer.profile');
+})->name('profile');
 
 // seller
 Route::group(['prefix' => 'seller'], function () {

@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="{{ url("images/$product->image") }}" height="200" width="200" alt="">
+                    <img class="rounded-circle" src="{{ url("images/$product->image") }}" height="200" width="200" alt="">
                     <br><br>
                     <input type="file" name="image" id="foto">
                 </div>
