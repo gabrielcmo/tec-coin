@@ -8,34 +8,37 @@
         <hr>
     </div>
     <br>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Imagem</th>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>Tipo ID</th>
+                
                 <th>Valor</th>
                 <th>Descrição</th>
-                <th>Editar</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($listproducts as $item)
                 <tr>
-                    <td><img class="rounded-circle" src="{{ url("images/>$item->image") }}" width="59" height="59" alt=""></td>
+                    <td><img class="rounded-circle" src="{{ url("images/$item->image") }}" width="59" height="59" alt=""></td>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->type_id }}</td>
+                  
                     <td>{{ $item->value }}</td>
                     <td>{{ $item->description }}</td>
                     <td>
-                        <a href="products/{{ $item->id }}"><img src="{{ url('images/delete.png') }}" height="20" width="20" alt=""></a>
-                        <form action="/seller/products/edit" method="post">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $item->id }}">
-                            <button type="submit"><img src="{{ url('images/edit.png') }}" height="20" width="20" alt=""></button>
-                        </form>
+                        <div class="row">
+            
+                            <a class="btn btn-danger" href="{{ url("seller/products/$item->id") }}">Excluir</a>
+                            <form action="/seller/products/edit" method="post">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                &nbsp;<button class="btn btn-warning" type="submit">Editar</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach

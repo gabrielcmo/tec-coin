@@ -17,7 +17,7 @@ Route::get('/users', 'AdminController@listAllUsers');
 // buyer
 Route::get('user/orders/historic', 'BuyerController@historic');
 Route::get('/buyer/products', 'BuyerController@products')->name('buyerproducts');
-Route::get('/buyer/extract', 'BuyerController@extract')->name('extract');
+Route::get('/buyer/balance', 'BuyerController@extract')->name('extract');
 Route::post('/products/order', 'BuyerController@orderProduct');
 Route::get('/user/profile', 'BuyerController@profile')->name('profileform');
 Route::put('/user/profile/update', 'BuyerController@updateProfile');
@@ -27,11 +27,11 @@ Route::get('/user/view/profile/', function(){
 
 // seller
 Route::get('/seller/products', 'SellerController@products')->name('sellerproducts');
-Route::get('/seller/products/edit', 'SellerController@editProduct');
-Route::put('/seller/products/update', 'SellerController@updateProduct');
-Route::delete('seller/products/{id}', 'SellerController@destroyProduct');
+Route::post('/seller/products/edit', 'SellerController@editProduct');
+Route::post('/seller/products/update', 'SellerController@updateProduct');
+Route::get('seller/products/{id}', 'SellerController@destroyProduct');
 Route::get('/products/create', 'SellerController@createProduct')->name('productsregister');
 Route::post('/seller/products/store', 'SellerController@storeProduct');
 Route::get('/seller/orders', 'SellerController@pendingOrders')->name('pendingorders');
-Route::post('/seller/orders/{id}/accept', 'SellerController@acceptOrder');
-Route::post('/seller/orders/{id}/deny', 'SellerController@denyOrder');
+Route::get('/seller/orders/{id}/accept/{iduser}/{idproduct}', 'SellerController@acceptOrder');
+Route::get('/seller/orders/{id}/deny', 'SellerController@denyOrder');
