@@ -38,17 +38,17 @@ class LoginController extends Controller
         //$this->middleware('guest')->except('logout');
     }
 
-    public function redirectTo(){
-        $user = Auth::user()->id;
+    // public function redirectTo(){
+    //     $user = Auth::user()->id;
 
-        if($user == 1){
-            return $redirectTo = '/home';
-        }elseif($user == 2){
-            return view('buyer.home');
-        }elseif($user >= 3 || $user <= 5){
-            return view('seller.home');
-        }
+    //     if($user == 1){
+    //         return $redirectTo = '/home';
+    //     }elseif($user == 2){
+    //         return view('buyer.home');
+    //     }elseif($user >= 3 || $user <= 5){
+    //         return view('seller.home');
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 }
