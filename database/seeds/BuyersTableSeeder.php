@@ -12,8 +12,7 @@ class BuyersTableSeeder extends Seeder
     public function run()
     {
         DB::table('buyers')->insert([
-            'user_id' => '2',
-            'balance' => '20'
+            'user_id' => '2'
         ]);
     }
 }
