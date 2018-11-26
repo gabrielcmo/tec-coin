@@ -9,6 +9,7 @@ use App\Seller;
 use App\Buyer;
 use App\OrderStatus;
 use App\Product;
+use App\Orders;
 
 class SellerController extends Controller
 {
@@ -87,6 +88,14 @@ class SellerController extends Controller
         $orders = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
         
         return view('seller.pendingorders', compact('orders','all_products'));
+    }
+
+    public function historic(){
+        $id = Auth::user()->id;
+
+        $ordersApprovedOFSeller = Orders::where([['seller_id', '=' , $id], ['status_id', '=', '2']])->get();
+        
+        return view('seller.historic')->with(compact('ordersApprovedOFSeller'));
     }
 
     public function acceptOrder($id)
