@@ -16,11 +16,16 @@ class SellerController extends Controller
     {
         $this->middleware('auth');
     }
-    public function type_id_userProduct($id){
+    public static function type_id_userProduct($id){
         if($id == 3){
-
+            return 1;
+        }elseif($id == 4){
+            return 2;
+        }elseif($id == 5){
+            return 3;
         }
 
+        return false;
     }
     public function products()
     {
@@ -35,15 +40,15 @@ class SellerController extends Controller
         return view ('seller.editproduct');
     }
 
-    public function updateProduct(Request $r , $id)
+    public function updateProduct(Request $r)
     {
+        $id = $r["id"];
+
         // Atualizar dados de um produto
         Product::where('id', $id)->update(['name' => $r['name']]);
         Product::where('id', $id)->update(['value' => $r['value']]);
         Product::where('id', $id)->update(['description' => $r['description']]);
         Product::where('id', $id)->update(['image' => $r['image']]);
-        //Alterar o tipo de Produto?
-        Product::where('id', $id)->update(['type_id' => $r['type']]);
         return view('home');
     }
 
