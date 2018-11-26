@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             ProductTypesTableSeeder::class,
             ProductTableSeeder::class,
             SellersTableSeeder::class,
-            BalancesTableSeeder::class,
+            DepositsTableSeeder::class,
             OrderStatusTableSeeder::class,
             OrdersTableSeeder::class
         ]);
