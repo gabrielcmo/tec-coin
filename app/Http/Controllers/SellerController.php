@@ -89,24 +89,17 @@ class SellerController extends Controller
         return view('seller.pendingorders', compact('orders','all_products'));
     }
 
-    public function acceptOrder($id, $iduser, $idproduct)
+    public function acceptOrder($id)
     {
-        // Aprovar um pedido
-        Order::where('id',$id)->update(['status_id' => 2]);
-        $value = Product::where('id', $idproduct)->value('value');
-        $valueUser = Buyer::where('user_id', $iduser)->value('balance');
-        $novovalor = $valueUser - $value;
-        Buyer::where('user_id', $iduser)->update(['balance' => $novovalor]);
-        return redirect('home');
-        
+        $selectedOrder = Order::find($id);
+        $selectedOrder->update(['status_id' => OrderStatus::$ACCEPTED]);
+        return redirect()->action('SellerController@pendingOrders');    
     }
 
-    public function denyOrder($id)
+    public function cancelOrder($id)
     {
-        echo "Deny funfando";
-        die();
-        $id = Seller::where('user_id', Auth::user()->id)->value('id');
-        // Recusar um pedido
-        Order::where('seller_id',$id)->update(['status_id' => 3]);
+        $selectedOrder = Order::find($id);
+        $selectedOrder->update(['status_id' => OrderStatus::$CANCELED]);
+        return redirect()->action('SellerController@pendingOrders'); 
     }
 }

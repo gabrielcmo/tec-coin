@@ -33,5 +33,5 @@ Route::get('seller/products/{id}', 'SellerController@destroyProduct');
 Route::get('/products/create', 'SellerController@createProduct')->name('productsregister');
 Route::post('/seller/products/store', 'SellerController@storeProduct');
 Route::get('/seller/orders', 'SellerController@pendingOrders')->name('pendingorders');
-Route::get('/seller/orders/{id}/accept/{iduser}/{idproduct}', 'SellerController@acceptOrder');
-Route::get('/seller/orders/{id}/deny', 'SellerController@denyOrder');
+Route::post('/seller/orders/{id}/accept', 'SellerController@acceptOrder');
+Route::post('/seller/orders/{id}/cancel', 'SellerController@cancelOrder');
