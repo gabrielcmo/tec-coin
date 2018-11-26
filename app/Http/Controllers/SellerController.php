@@ -78,20 +78,10 @@ class SellerController extends Controller
 
     public function pendingOrders()
     {
-        $arrayIdProduct = array();
         $idseller = Seller::where('user_id', Auth::user()->id)->value('id');
-        // Buscar todos os pedidos pendentes do tipo do vendedor logado
-        // Pegando o ID de todos os produtos
-        $all_idproduct_in_order = Order::select('product_id as id')->where('seller_id', $idseller)->where('status_id', 1)->get();
-        foreach($all_idproduct_in_order as $id) {
-            $arrayIdProduct[] = $id['id'];
-        }
-        $result = array_unique($arrayIdProduct);
-        $all_order = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
-        //Não sei se isso vai funcionar...
-        $all_products = Product::whereIn('id', $all_idproduct_in_order)->get();
-        // Exibir a tela de listagem de pedidos pendentes
-        return view('seller.listorder', compact('all_order','all_products'));
+        $orders = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
+        
+        return view('seller.pendingorders', compact('orders','all_products'));
     }
 
     public function acceptOrder()
