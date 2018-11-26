@@ -9,7 +9,11 @@ use App\User;
 use App\Order;
 use App\Deposit;
 use Illuminate\Foundation\Auth\User as AuthUser;
+<<<<<<< HEAD
 use Auth;
+=======
+
+>>>>>>> d87ae52d31e17a0a95fce19b5ca54acba435d84a
 use App\ExtractRecord;
 use App\Seller;
 
@@ -62,10 +66,8 @@ class BuyerController extends Controller
         $value = Product::where('id' , $r['id'])->value('value');
         
         if ($valueUser < $value) return view('buyer.error');
-        
         $iduser = Auth::user()->id;
         $idbuyer = Buyer::where('user_id', $iduser)->value('id');
-
         // Fazer um pedido pelo id do produto
         $idseller = Seller::where('product_type_id', $r['id_product'])->value('id');
         $order = new Order;

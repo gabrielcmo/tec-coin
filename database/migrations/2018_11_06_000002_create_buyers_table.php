@@ -11,6 +11,9 @@ class CreateBuyersTable extends Migration
      *
      * @return void
      */
+
+     protected $timestamps = true;
+
     public function up()
     {
         Schema::create('buyers', function (Blueprint $table) {
@@ -18,6 +21,7 @@ class CreateBuyersTable extends Migration
             $table->integer('balance');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

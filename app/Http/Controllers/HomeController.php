@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user()->id;
+
+        if($user == 1){
+            return view('admin.home');
+        }elseif($user == 2){
+            return view('buyer.home');
+        }elseif($user >= 3 || $user <= 5){
+            return view('seller.home');
+        }
+
+        return false;
     }
 }

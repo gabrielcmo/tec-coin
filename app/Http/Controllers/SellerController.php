@@ -24,8 +24,8 @@ class SellerController extends Controller
     }
     public function products()
     {
-        $id = Auth::user()->user_type_id;
-        $listproducts = Product::where("type_id", SellerController::type_id_userProduct($id))->get();
+        $productype = Seller::where('user_id', Auth::user()->id)->value('product_type_id');
+        $listproducts = Product::where("type_id", $productype)->get();
         return view('seller.listproduct')->with(compact('listproducts'));
     }
 
@@ -78,32 +78,28 @@ class SellerController extends Controller
 
     public function pendingOrders()
     {
-        $arrayIdProduct = array();
         $idseller = Seller::where('user_id', Auth::user()->id)->value('id');
-        // Buscar todos os pedidos pendentes do tipo do vendedor logado
-        // Pegando o ID de todos os produtos
-        $all_idproduct_in_order = Order::select('product_id as id')->where('seller_id', $idseller)->where('status_id', 1)->get();
-        foreach($all_idproduct_in_order as $id) {
-            $arrayIdProduct[] = $id['id'];
-        }
-        $result = array_unique($arrayIdProduct);
-        $all_order = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
-        //Não sei se isso vai funcionar...
-        $all_products = Product::whereIn('id', $all_idproduct_in_order)->get();
-        // Exibir a tela de listagem de pedidos pendentes
-        return view('seller.listorder', compact('all_order','all_products'));
+        $orders = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
+        
+        return view('seller.pendingorders', compact('orders','all_products'));
     }
 
-    public function acceptOrder()
+    public function acceptOrder($id, $iduser, $idproduct)
     {
-        $id = Seller::where('user_id', Auth::user()->id)->value('id');
         // Aprovar um pedido
-        Order::where('seller_id',$id)->update(['status_id' => 2]);
-        return view('home');
+        Order::where('id',$id)->update(['status_id' => 2]);
+        $value = Product::where('id', $idproduct)->value('value');
+        $valueUser = Buyer::where('user_id', $iduser)->value('balance');
+        $novovalor = $valueUser - $value;
+        Buyer::where('user_id', $iduser)->update(['balance' => $novovalor]);
+        return redirect('home');
+        
     }
 
-    public function denyOrder()
+    public function denyOrder($id)
     {
+        echo "Deny funfando";
+        die();
         $id = Seller::where('user_id', Auth::user()->id)->value('id');
         // Recusar um pedido
         Order::where('seller_id',$id)->update(['status_id' => 3]);
