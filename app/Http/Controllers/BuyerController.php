@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use Auth;
 use App\Buyer;
 use App\User;
 use App\Order;
@@ -22,7 +23,11 @@ class BuyerController extends Controller
 
     public function balance()
     {
-        return view("buyer.balance");
+        $id = Auth::user()->id;
+        $user = Buyer::where('user_id', $id)->first();
+        $balance = $user->balance;
+
+        return view('buyer.balance')->with(compact('balance'));
     }
 
     public function orderProduct($idbuyer , $idproduct , $idseller)

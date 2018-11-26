@@ -31,7 +31,7 @@ class BalanceController extends Controller
     public function debit(Request $request){
         $id = $request["id"];
         $value = $request["value"];
-        
+
         $buyer = Buyer::where('user_id', $id)->first();
         $balance = $buyer->balance - $value;
         Buyer::where('user_id', $id)->update('balance', $balance);
