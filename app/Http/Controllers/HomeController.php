@@ -24,16 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->id;
+        // $user = Auth::user()->id;
 
-        if($user == 1){
-            return view('admin.home');
-        }elseif($user == 2){
-            return view('buyer.home');
-        }elseif($user >= 3 || $user <= 5){
-            return view('seller.home');
-        }
+        // if($user == 1){
+        //     return view('admin.home');
+        // }elseif($user == 2){
+        //     return view('buyer.home');
+        // }elseif($user >= 3 || $user <= 5){
+        //     return view('seller.home');
+        // }
 
-        return false;
+        // return false;
+        return view('home');
     }
 }
