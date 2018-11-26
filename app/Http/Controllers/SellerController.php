@@ -24,8 +24,8 @@ class SellerController extends Controller
     }
     public function products()
     {
-        $id = Auth::user()->user_type_id;
-        $listproducts = Product::where("type_id", SellerController::type_id_userProduct($id))->get();
+        $productype = Seller::where('user_id', Auth::user()->id)->value('product_type_id');
+        $listproducts = Product::where("type_id", $productype)->get();
         return view('seller.listproduct')->with(compact('listproducts'));
     }
 
@@ -94,16 +94,22 @@ class SellerController extends Controller
         return view('seller.listorder', compact('all_order','all_products'));
     }
 
-    public function acceptOrder()
+    public function acceptOrder($id, $iduser, $idproduct)
     {
-        $id = Seller::where('user_id', Auth::user()->id)->value('id');
         // Aprovar um pedido
-        Order::where('seller_id',$id)->update(['status_id' => 2]);
-        return view('home');
+        Order::where('id',$id)->update(['status_id' => 2]);
+        $value = Product::where('id', $idproduct)->value('value');
+        $valueUser = Buyer::where('user_id', $iduser)->value('balance');
+        $novovalor = $valueUser - $value;
+        Buyer::where('user_id', $iduser)->update(['balance' => $novovalor]);
+        return redirect('home');
+        
     }
 
-    public function denyOrder()
+    public function denyOrder($id)
     {
+        echo "Deny funfando";
+        die();
         $id = Seller::where('user_id', Auth::user()->id)->value('id');
         // Recusar um pedido
         Order::where('seller_id',$id)->update(['status_id' => 3]);

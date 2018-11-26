@@ -1,3 +1,4 @@
+<?php use App\Buyer; ?>
 @extends('layouts.app')
 
 @section('content')
@@ -13,24 +14,18 @@
                                 <a href="/register/mass" class="list-group-item list-group-item-action">Cadastro de Usuários em Massa</a>
                                 <a href="/users" class="list-group-item list-group-item-action">Consulta de Usuários</a>
                                 <a href="/sellers" class="list-group-item list-group-item-action">Consultar Vendedor</a>
-<<<<<<< HEAD
-                            @elseif (Auth::user()->role == 1)
+                            @elseif (Auth::user()->user_type_id == 2)
                                 <?php
-                                    $balance = isset($balance) ? $balance : null;
+                                    $balance = Buyer::where('user_id', Auth::user()->id)->value('balance');
                                 ?>
                                 <h3>Seu saldo é de {{$balance}} reais.</h3>
-                                <a href="/user/products" class="list-group-item list-group-item-action">Listagem de Produtos</a>
-                                <a href="/user/statement" class="list-group-item list-group-item-action">Consultar Extrato</a>
-=======
-                            @elseif (Auth::user()->user_type_id == 2)
                                 <a href="/buyer/products" class="list-group-item list-group-item-action">Listagem de Produtos</a>
                                 <a href="/buyer/balance" class="list-group-item list-group-item-action">Consultar Extrato</a>
->>>>>>> ea47c3dd57a071644186dc3eae1436b0b7c99160
                                 <a href="/user/orders/historic" class="list-group-item list-group-item-action">Histórico de Compras</a>
                             @else
                                 <a href="/products/create" class="list-group-item list-group-item-action">Cadastro de Produtos</a>
-                                <a href="/products" class="list-group-item list-group-item-action">Listagem de produtos</a>
-                                <a href="/orders" class="list-group-item list-group-item-action">Consultar Pedidos</a>
+                                <a href="/seller/products" class="list-group-item list-group-item-action">Listagem de produtos</a>
+                                <a href="/seller/orders" class="list-group-item list-group-item-action">Consultar Pedidos</a>
                                 <a href="/seller/orders/historic" class="list-group-item list-group-item-action">Histórico de Compras</a>
                             @endif
                         </div>

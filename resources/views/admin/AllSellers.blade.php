@@ -1,3 +1,5 @@
+<?php use App\ProductType; ?>
+<?php use App\Seller; ?>
 @extends('layouts.app')
 @section('content')
 <div class="container">
@@ -12,7 +14,7 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Produto ID</th>
+                        <th scope="col">Tipo de Vendedor</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
                         <th scope="col">Senha</th>
@@ -21,9 +23,11 @@
                 </thead>
                 <tbody>
                 @foreach($sellers as $seller)
+                <?php $tipodeusuario = Seller::where('user_id',$seller->id)->value('product_type_id') ?> 
+                <?php $tipoproduto = ProductType::where('id', $tipodeusuario)->value('description') ?>
                     <tr>
                         <th scope="row">{{$seller->id}}</th>
-                        <td>?</td>
+                        <td>{{$tipoproduto}}</td>
                         <td>{{$seller->name}}</td>
                         <td>{{$seller->email}}</td>
                         <td>?</td>

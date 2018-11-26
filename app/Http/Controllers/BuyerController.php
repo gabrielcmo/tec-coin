@@ -10,7 +10,7 @@ use App\User;
 use App\Order;
 use App\Deposit;
 use Illuminate\Foundation\Auth\User as AuthUser;
-use Illuminate\Support\Facades\Auth;
+
 use App\ExtractRecord;
 use App\Seller;
 
@@ -27,13 +27,6 @@ class BuyerController extends Controller
 
     public function extract()
     {
-<<<<<<< HEAD
-        $id = Auth::user()->id;
-        $user = Buyer::where('user_id', $id)->first();
-        $balance = $user->balance;
-
-        return view('buyer.balance')->with(compact('balance'));
-=======
         // Pegar todos os valores que foram adicionados à conta do comprador (usuário logado)
         $loggedBuyer = Buyer::where("user_id", Auth::user()->id)->first();
         $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
@@ -61,7 +54,6 @@ class BuyerController extends Controller
         $balance = self::toBalance($orders, $deposits);
         
         return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
->>>>>>> ea47c3dd57a071644186dc3eae1436b0b7c99160
     }
 
     public function orderProduct(Request $r)
@@ -71,10 +63,8 @@ class BuyerController extends Controller
         $value = Product::where('id' , $r['id'])->value('value');
         
         if ($valueUser < $value) return view('buyer.error');
-        
         $iduser = Auth::user()->id;
         $idbuyer = Buyer::where('user_id', $iduser)->value('id');
-
         // Fazer um pedido pelo id do produto
         $idseller = Seller::where('product_type_id', $r['id_product'])->value('id');
         $order = new Order;
