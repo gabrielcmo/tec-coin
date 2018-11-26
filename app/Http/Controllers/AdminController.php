@@ -31,7 +31,7 @@ class AdminController extends Controller
         // ??
         // Depositar valor
         $idbuyer = Buyer::where('id',$r['id'])->get();
-        $balance = new Balance;
+        $balance = new Balance();
         $balance->value = $r['value'];
         $balance->admin_id = 1;
         $balance->buyer_id = $idbuyer;

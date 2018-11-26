@@ -68,7 +68,7 @@ class SellerController extends Controller
     public function storeProduct(Request $r)
     {
         // Receber dados do form de cadastro de produtos
-        $product = new Product;
+        $product = new Product();
         $product->name = $r['name'];
         $product->value = $r['value'];
         $product->description = $r['description'];
