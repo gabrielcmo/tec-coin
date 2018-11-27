@@ -18,13 +18,13 @@
             </div>
             <br>
             <h2>
-                <i class="material-icons">local_grocery_store</i>
+                <i class="material-icons"></i>
                 <em>Produtos disponíveis</em>
             </h2>
             <br>
             <div>
                 <h4>
-                    <i class="material-icons">local_mall</i>
+                    <i class="material-icons"></i>
                     Lojinha
                 </h4>
                 <br>
@@ -36,8 +36,7 @@
                                 @csrf
                                     <input type="hidden" name="id" value="{{ $products->id }}" id=""> <br/>
                                     <div class="card" style="width: 270px;">
-                                        <img class="card-img-top" src="http://www.clinicaprimacordis.com.br/wp-content/uploads/2016/10/orionthemes-placeholder-image.png"
-                                            alt="Card image cap">
+                                        <img class="card-img-top"width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
                                         <div class="card-body">
                                             <h5 class="card-title">{{$products->name}}</h5>
                                             <p class="card-text lead">Um lindo treco só seu!</p>
@@ -55,8 +54,7 @@
                                                 @csrf
                                                     <input type="hidden" name="id" value="{{ $products->id }}" id=""> <br/>
                                                     <div class="card" style="width: 270px;">
-                                                        <img class="card-img-top" src="http://www.clinicaprimacordis.com.br/wp-content/uploads/2016/10/orionthemes-placeholder-image.png"
-                                                            alt="Card image cap">
+                                                        <img class="card-img-top" width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{$products->name}}</h5>
                                                             <p class="card-text lead">Um lindo treco só seu!</p>

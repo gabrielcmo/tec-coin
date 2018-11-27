@@ -51,9 +51,8 @@ class BuyerController extends Controller
         $idUser = Auth::user()->id;
         $idbuyer = Buyer::where('user_id', $idUser)->value('id');
 
-        $deposits = Deposit::where("buyer_id", $idbuyer)->get();
-        $orders = Order::where(["buyer_id" => $idbuyer, "status_id" => 1, "status_id" => 2])->get();
-        $balance = self::toBalance($orders, $deposits);
+        $extract = BuyerController::extract();
+        $balance = $extract["balance"];
 
         $value = Product::where('id' , $r['id'])->value('value');
         
@@ -62,7 +61,8 @@ class BuyerController extends Controller
         }
 
         // Fazer um pedido pelo id do produto
-        $idseller = Seller::where('product_type_id', $r['id'])->value('id');
+        $product = Product::where('id', $r['id'])->value('type_id');
+        $idseller = Seller::where('product_type_id', $product)->value('user_id');
 
         $order = new Order();
         $order->product_id = $r['id'];
