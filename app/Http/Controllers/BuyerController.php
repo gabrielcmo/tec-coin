@@ -57,15 +57,28 @@ class BuyerController extends Controller
     
     public function orderProduct(Request $r)
     {
-        //Não comprar duas vezes
         $idUser = Auth::user()->id;
         $idbuyer = Buyer::where('user_id', $idUser)->value('id');
 
-        $extract = BuyerController::extract();
-        $balance = $extract["balance"];
+            //Não comprar quando a difereça do balance com valor das orders em espera 
+            //for maior que o valor do produto
+            $ordersEmEspera = Order::where(['buyer_id' => $idbuyer, 'status_id' => 1])->get();
+            
+            $valorGasto = 0;
+            foreach($ordersEmEspera as $order){
+                $valorGasto += $order->value; 
+            }
 
-        $value = Product::where('id' , $r['id'])->value('value');
-        
+            $extract = BuyerController::extract();
+            $balance = $extract["balance"];
+
+            
+            $value = Product::where('id' , $r['id'])->value('value');
+
+            if(($balance - $valorGasto) < $value){
+                return response('sem saldo', 404);
+            }
+
         if ($balance < $value){
             return view('buyer.error');
         }
