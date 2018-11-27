@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-
     protected $fillable = ['product_id', 'buyer_id', 'seller_id', 'status_id', 'value'];
 
     public function product() { return $this->hasOne('App\Product', 'id'); }

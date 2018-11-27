@@ -17,6 +17,7 @@
                 use App\Buyer;
 
                 $buyer = Buyer::all();
+                
                 foreach ($buyer as $key => $value) {
                     $deposits = Deposit::where("buyer_id", $value->id)->get();
                     $orders = Order::where(["buyer_id" => $value->id, "status_id" => 1, "status_id" => 2])->get();
@@ -44,7 +45,20 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
                             <td>{{$balance}}</td>
-                            <td><a href="form-edit_user.html" class="btn btn-warning">Editar</a> &nbsp; <a href="#" class="btn btn-danger">Excluir</a></td>
+                            <td>
+                                <div class="row">
+                                        <form action="/seller/products/edit" method="post">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $user->id }}">
+                                            &nbsp;<button class="btn btn-warning" type="submit">Editar</button>
+                                        </form>
+                                        <form action="user/delete" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $user->id }}">
+                                            &nbsp;<button class="btn btn-danger" type="submit">Excluir</button>
+                                        </form>
+                                    </div>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
