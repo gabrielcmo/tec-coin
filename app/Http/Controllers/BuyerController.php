@@ -114,7 +114,7 @@ class BuyerController extends Controller
     }
 
     public function historic() {
-        $idbuyer= Buyer::where('user_id', Auth::user()->id)->value('id');
+        $idbuyer = Buyer::where('user_id', Auth::user()->id)->value('id');
         $historic = Order::where('buyer_id', $idbuyer)->get();
         return view('buyer.historic', compact('historic'));
     }
