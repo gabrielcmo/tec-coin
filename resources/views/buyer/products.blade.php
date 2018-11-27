@@ -36,11 +36,11 @@
                                 @csrf
                                     <input type="hidden" name="id" value="{{ $products->id }}" id=""> <br/>
                                     <div class="card" style="width: 270px;">
-                                        <img class="card-img-top" src="http://www.clinicaprimacordis.com.br/wp-content/uploads/2016/10/orionthemes-placeholder-image.png"
+                                    <img class="card-img-top" width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
                                             alt="Card image cap">
                                         <div class="card-body">
                                             <h5 class="card-title">{{$products->name}}</h5>
-                                            <p class="card-text lead">Um lindo treco só seu!</p>
+                                            <p class="card-text lead">{{$products->description}}</p>
                                             <img src="{{url('/images/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt=""> {{$products->value}}
                                             <input type="submit" class="btn text-light roxo-1" value="Comprar">
                                         </div>
@@ -55,11 +55,11 @@
                                                 @csrf
                                                     <input type="hidden" name="id" value="{{ $products->id }}" id=""> <br/>
                                                     <div class="card" style="width: 270px;">
-                                                        <img class="card-img-top" src="http://www.clinicaprimacordis.com.br/wp-content/uploads/2016/10/orionthemes-placeholder-image.png"
+                                                    <img class="card-img-top" width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
                                                             alt="Card image cap">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{$products->name}}</h5>
-                                                            <p class="card-text lead">Um lindo treco só seu!</p>
+                                                            <p class="card-text lead">{{$products->description}}</p>
                                                             <img src="{{url('/images/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt=""> {{$products->value}}
                                                             <input type="submit" class="btn text-light roxo-1" value="Comprar">
                                                         </div>
@@ -77,7 +77,7 @@
                                             <img class="card-img-top" width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{$products->name}}</h5>
-                                                <p class="card-text lead">Um lindo treco só seu!</p>
+                                                <p class="card-text lead">{{$products->description}}</p>
                                                 <p><img src="{{url('/images/logo.png')}}" width="25" height="25" alt=""> <strong class="margin-dp2">{{$products->value}}</strong>  
                                                 <input type="submit" class="btn text-light roxo-1" value="Comprar"></p>
                                             </div>

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Tec-Coin') }}</title>
+    <title>{{ config('app.name', 'TecCoin') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -65,11 +65,22 @@
                         <a class="nav-link" href="{{ route('extract') }}">Extrato</a>
                     </li>
 
-                @elseif (Auth::user()->user_type_id == 3)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pendingorders') }}">Pedidos Pendentes</a>
+                        <a class="nav-link" href="{{ url("user/orders/historic") }}">Histórico</a>
                     </li>
 
+                @elseif (Auth::user()->user_type_id == 3)
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Pedidos
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('pendingorders') }}">Pendentes</a>
+                            <a class="dropdown-item" href="{{ url("seller/orders/historic") }}">Histórico</a>
+                        </div>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">

@@ -35,6 +35,15 @@ class HomeController extends Controller
         // }
 
         // return false;
-        return view('home');
+        if (Auth::user()->user_type_id == 2) {
+            return redirect('/buyer/products');
+        }
+        elseif (Auth::user()->user_type_id == 3){
+            return redirect('/seller/orders');
+        }
+        else {
+            return view('home');
+        }
+        
     }
 }
