@@ -15,9 +15,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID do Produto</th>
-                    <th>ID do Comprador</th>
-                    <th>ID do Vendedor</th>
+                    <th>Nome do Produto</th>
+                    <th>Nome do Vendedor</th>
                     <th>Status</th>
                     <th>Valor</th>
                 </tr>
