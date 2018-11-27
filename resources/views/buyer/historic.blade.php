@@ -15,9 +15,10 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Nome Produto</th>
-                    <th>Nome Vendedor</th>
-                    <th>Status do Pedido</th>
+                    <th>ID do Produto</th>
+                    <th>ID do Comprador</th>
+                    <th>ID do Vendedor</th>
+                    <th>Status</th>
                     <th>Valor</th>
                 </tr>
             </thead>
@@ -25,7 +26,7 @@
                 @foreach($historic as $historic)
                     <tr>
                         <td>{{$historic->product->name}}</td>
-                        <td>{{$historic->seller->user->name}}</td>
+                        <td>{{$historic->buyer_id->user->name}}</td>
                         <td>{{$historic->status->description}}</td>
                         <td>{{$historic->value}}</td>
                     </tr>

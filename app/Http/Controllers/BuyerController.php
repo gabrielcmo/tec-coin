@@ -45,7 +45,7 @@ class BuyerController extends Controller
             return view('welcome');
         }
         if ($idUserType == 1) {
-            return view ('welcome');       
+            return view ('welcome');
         }
         $loggedBuyer = Buyer::where("user_id", $idUser)->first();
         $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
@@ -54,29 +54,29 @@ class BuyerController extends Controller
         $balance = self::toBalance($orders, $deposits);
         return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
     }
-    
+
     public function orderProduct(Request $r)
     {
         $idUser = Auth::user()->id;
         $idbuyer = Buyer::where('user_id', $idUser)->value('id');
 
-            //Não comprar quando a difereça do balance com valor das orders em espera 
+            //Não comprar quando a difereça do balance com valor das orders em espera
             //for maior que o valor do produto
             $ordersEmEspera = Order::where(['buyer_id' => $idbuyer, 'status_id' => 1])->get();
-            
+
             $valorGasto = 0;
             foreach($ordersEmEspera as $order){
-                $valorGasto += $order->value; 
+                $valorGasto += $order->value;
             }
 
             $extract = BuyerController::extract();
             $balance = $extract["balance"];
 
-            
+
             $value = Product::where('id' , $r['id'])->value('value');
 
             if(($balance - $valorGasto) < $value){
-                return response('sem saldo', 404);
+
             }
 
         if ($balance < $value){
@@ -133,10 +133,10 @@ class BuyerController extends Controller
     }
 
     private static function toExtract($orders, $deposits) {
-        foreach ($orders as $order) {   
+        foreach ($orders as $order) {
             $extractArray[] = new ExtractRecord($order->value, $order->description(), $order->created_at, "order");
         }
-        
+
         foreach ($deposits as $deposit) {
             $extractArray[] = new ExtractRecord($deposit->value, $deposit->description, $deposit->created_at, "deposit");
         }
@@ -144,7 +144,7 @@ class BuyerController extends Controller
         if(empty($extractArray)){
             $extractArray = [];
         }
-        
+
         usort($extractArray, function($a, $b) {
             return strcmp($a->date, $b->date);
         });
@@ -157,7 +157,7 @@ class BuyerController extends Controller
         foreach ($orders as $order) {
             $balance -= $order->value;
         }
-        
+
         foreach ($deposits as $deposit) {
             $balance += $deposit->value;
         }

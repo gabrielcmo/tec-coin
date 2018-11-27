@@ -93,7 +93,7 @@ class SellerController extends Controller
 
     public function historic(){
         $seller = Seller::where('user_id', Auth::user()->id)->first();
-        $approvedOrders = Order::where([['seller_id', '=' , $seller->id], ['status_id', '=', '2']])->get();
+        $approvedOrders = Order::where([['seller_id', '=' , $seller->id],])->get();
         //dd($approvedOrders[0]->product);
         return view('seller.historic')->with(compact('approvedOrders'));
     }
@@ -104,13 +104,13 @@ class SellerController extends Controller
         $idOrderStatus = $selectedOrder->id_order_status;
         $orderstatus = OrderStatus::find($idOrderStatus);
         $selectedOrder->update(['status_id' => OrderStatus::$ACCEPTED]);
-        return redirect()->action('SellerController@pendingOrders');    
+        return redirect()->action('SellerController@pendingOrders');
     }
 
     public function cancelOrder($id)
     {
         $selectedOrder = Order::find($id);
         $selectedOrder->update(['status_id' => OrderStatus::$CANCELED]);
-        return redirect()->action('SellerController@pendingOrders'); 
+        return redirect()->action('SellerController@pendingOrders');
     }
 }

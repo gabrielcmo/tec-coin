@@ -18,13 +18,13 @@
             </div>
             <br>
             <h2>
-                <i class="material-icons"></i>
+                <i class="material-icons">local_grocery_store</i>
                 <em>Produtos disponíveis</em>
             </h2>
             <br>
             <div>
                 <h4>
-                    <i class="material-icons"></i>
+                    <i class="material-icons">local_mall</i>
                     Lojinha
                 </h4>
                 <br>
