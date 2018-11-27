@@ -8,9 +8,9 @@ class Buyer extends Model
 {
 
     protected $table = 'buyers';
-    
+
     public function user()
     {
-        return $this->hasOne('App\User', 'id', 'user_id');
+        return $this->belongsTo('App\User');
     }
 }

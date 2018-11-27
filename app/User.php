@@ -29,8 +29,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function product() {
-	    return $this->belongsTo('App/Buyer');
+    public function name() {
+	    return $this->hasOne('App\Buyer');
+    }
+    public function name2()
+    {
+        return $this->hasOne('App\Seller');
     }
 }
-   
+
