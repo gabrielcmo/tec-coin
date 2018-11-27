@@ -25,14 +25,22 @@
                 </thead>
                 <tbody>
                 @foreach($sellers as $seller)
-                <?php $tipodeusuario = Seller::where('user_id',$seller->id)->value('product_type_id') ?> 
+                <?php $tipodeusuario = Seller::where('user_id',$seller->id)->value('product_type_id') ?>
                 <?php $tipoproduto = ProductType::where('id', $tipodeusuario)->value('description') ?>
                     <tr>
                         <th scope="row">{{$seller->id}}</th>
                         <td>{{$tipoproduto}}</td>
                         <td>{{$seller->name}}</td>
                         <td>{{$seller->email}}</td>
-                        <td><a href="#" class="btn btn-warning">Editar</a>  &nbsp; <a href="#" class="btn btn-danger">Excluir</a></td>
+                        <td>
+                        <div class="row">
+                            <form action="user/{{$seller->id}}/delete" method="POST">
+                                            @csrf
+                                            {{ method_field('DELETE') }}
+                                <button class="btn btn-danger" type="submit">Excluir</button>
+                            </form>
+                        </div>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
