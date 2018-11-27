@@ -8,7 +8,13 @@
 
 @section('content')
 <div class="container">
-
+<br>
+            <div>
+                <h1 class="display-4"><i class="material-icons big">restore</i><strong> Histórico</strong></h1>
+                <p class="lead">Confira aqui todas suas compras passadas</p>
+                <hr>
+            </div>
+            <br>
         @if (empty($historic))
         <h1>Como assim você não comprou nada ?! Vá ver alguns produtos!!</h1>
     @else
