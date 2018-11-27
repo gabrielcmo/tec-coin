@@ -10,28 +10,37 @@
                 <hr>
             </div>
             <br>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Saldo</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($buyers as $buyer)
-                    <tr>
-                        <th scope="row">{{$buyer->id}}</th>
-                        <td>{{$buyer->user->name}}</td>
-                        <td>{{$buyer->user->email}}</td>
-                        <td>{{$buyer->balance}}</td>
-                        <td><a href="form-edit_user.html" class="btn btn-warning">Editar</a>  | <a href="#" class="btn btn-danger">Excluir</a></td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            <?php
+                use App\Http\Controllers\BuyerController;
+
+                $balance = BuyerController::balance();
+            ?>
+            @if (!isset($AllUsers))
+                <h1>Nenhum usuário</h1>
+            @else
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Saldo</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($AllUsers as $user)
+                        <tr>
+                            <th scope="row">{{$user->id}}</th>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$balance}}</td>
+                            <td><a href="form-edit_user.html" class="btn btn-warning">Editar</a> &nbsp; <a href="#" class="btn btn-danger">Excluir</a></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 

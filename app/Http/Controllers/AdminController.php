@@ -9,6 +9,7 @@ use App\Admin;
 use App\Balance;
 use App\Buyer;
 use App\Seller;
+use App\Http\Controllers\BuyerController;
 
 class AdminController extends Controller
 {

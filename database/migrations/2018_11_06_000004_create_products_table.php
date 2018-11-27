@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->foreign('type_id')->references('id')->on('product_types')->onDelete('cascade');
             $table->integer('value');
             $table->string('description')->unique();
-            $table->string('image');
+            $table->string('image')->default('productplacehorlder.png');
             $table->timestamps();
         });
     }

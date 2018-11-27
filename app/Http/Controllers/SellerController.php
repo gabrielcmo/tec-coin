@@ -49,7 +49,10 @@ class SellerController extends Controller
         Product::where('id', $id)->update(['name' => $r['name']]);
         Product::where('id', $id)->update(['value' => $r['value']]);
         Product::where('id', $id)->update(['description' => $r['description']]);
-        Product::where('id', $id)->update(['image' => $r['image']]);
+        $file = $r->file('image');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->move('images', $filename);
+        Product::where('id', $id)->update(['image' => $filename]);
         return view('home');
     }
 

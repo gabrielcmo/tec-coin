@@ -29,12 +29,31 @@ class BuyerController extends Controller
 
     public static function extract()
     {
-        $loggedBuyer = Buyer::where("user_id", Auth::user()->id)->first();
+        $idUser = Auth::user()->id;
+        $idUserType = Auth::user()->user_type_id;
+
+        if($idUserType == 3){
+            return view('welcome');
+        }
+        if ($idUserType == 1) {
+            return view ('welcome');       
+        }
+        $loggedBuyer = Buyer::where("user_id", $idUser)->first();
         $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
         $orders = Order::where(["buyer_id" => $loggedBuyer->id, "status_id" => 1, "status_id" => 2])->get();
         $displayExtract = self::toExtract($orders, $deposits);
         $balance = self::toBalance($orders, $deposits);
         return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
+    }
+
+    public static function balance(){
+        $idUser = Auth::user()->id;
+        $loggedBuyer = Buyer::where("user_id", $idUser)->value('id');
+        $deposits = Deposit::where("buyer_id", $loggedBuyer)->get();
+        $orders = Order::where(["buyer_id" => $loggedBuyer, "status_id" => 1, "status_id" => 2])->get();
+        $displayExtract = self::toExtract($orders, $deposits);
+        $balance = self::toBalance($orders, $deposits);
+        return $balance;
     }
 
     public function orderProduct(Request $r)
@@ -110,6 +129,10 @@ class BuyerController extends Controller
         
         foreach ($deposits as $deposit) {
             $extractArray[] = new ExtractRecord($deposit->value, $deposit->description, $deposit->created_at, "deposit");
+        }
+
+        if(empty($extractArray)){
+            $extractArray = [];
         }
         
         usort($extractArray, function($a, $b) {

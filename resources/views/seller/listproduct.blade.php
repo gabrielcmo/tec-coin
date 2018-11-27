@@ -22,7 +22,7 @@
         <tbody>
             @foreach ($listproducts as $item)
                 <tr>
-                    <td><img class="rounded-circle" src="{{ url("images/$item->image") }}" width="59" height="59" alt=""></td>
+                    <td><img class="rounded-circle" src="{{ url("/images/$item->image") }}" width="59" height="59" alt=""></td>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                   
