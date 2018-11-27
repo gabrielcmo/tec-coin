@@ -17,7 +17,7 @@ class CreateDepositsTable extends Migration
             $table->increments('id');
             $table->integer('value');
             $table->date('date');
-            $table->integer('buyer_id')->unsigned();
+            $table->integer('buyer_id')->length(255)->unsigned();
             $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade')
             ->onUpdate('cascade'); 
             $table->integer('admin_id')->unsigned();

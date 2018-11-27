@@ -3,13 +3,23 @@
 @section('content')
         <?php
             use App\Admin;
+            use App\User;
+            use App\Buyer;
         ?>
 
     <form action='user/deposit' method="POST">
         @csrf
 
-        ID DO USUARIO
-        <input type="number" name="buyer_id" id="">
+        <?php
+            $users = User::where('user_type_id', 2)->get();
+        ?>
+
+        USUARIOS
+        <select type="number" name="buyer_id" id="">
+            @foreach ($users as $user)
+                <option value="{{ Buyer::where('user_id' , $user->id)->value('id') }}">{{ $user->name }}</option>
+            @endforeach
+        </select>
         <input type="hidden" name="admin_id" value="{{ Admin::where('user_id', Auth::user()->id)->value('id') }}">
         VALOR
         <input type="number" name="value" id="">
