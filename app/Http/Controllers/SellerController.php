@@ -16,17 +16,7 @@ class SellerController extends Controller
     {
         $this->middleware('auth');
     }
-    public static function type_id_userProduct($id){
-        if($id == 3){
-            return 1;
-        }elseif($id == 4){
-            return 2;
-        }elseif($id == 5){
-            return 3;
-        }
-
-        return false;
-    }
+    
     public function products()
     {
         $productype = Seller::where('user_id', Auth::user()->id)->value('product_type_id');

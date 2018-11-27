@@ -9,6 +9,9 @@
         <hr>
     </div>
     <br>
+    <?php
+    use App\Seller;
+    ?>
     <form action="/seller/products/store" enctype="multipart/form-data" method="POST">
         <div class="row">
                 <div class="col-md-6">
@@ -16,7 +19,7 @@
                         <label for="nome">Nome</label>
                         <input type="text" name="name" class="form-control" id="nome" aria-describedby="nome" placeholder="Computador">
                     </div>
-                    <input type="hidden" name="type_id" value="{{ app(App\Http\Controllers\SellerController::class)->type_id_userProduct(Auth::user()->user_type_id) }}">
+                    <input type="hidden" name="type_id" value="{{ Seller::where('user_id', Auth::user()->id)->value('product_type_id') }}">
                     <div class="form-group">
                         <label for="valor">Valor</label>
                         <input type="number" name="value" class="form-control" id="valor" aria-describedby="valor" placeholder="1000">
