@@ -70,6 +70,9 @@ class AdminController extends Controller
 
     public function deposit(Request $r)
     {
+        if (!isset($r['buyer_id'])) {
+            return view('home');
+        }
         $deposit = new Deposit();
         $deposit->value = $r['value'];
         $deposit->admin_id = $r["admin_id"];
