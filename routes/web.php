@@ -35,3 +35,4 @@ Route::post('/seller/products/store', 'SellerController@storeProduct');
 Route::get('/seller/orders', 'SellerController@pendingOrders')->name('pendingorders');
 Route::post('/seller/orders/{id}/accept', 'SellerController@acceptOrder');
 Route::post('/seller/orders/{id}/cancel', 'SellerController@cancelOrder');
+Route::get('/seller/orders/historic', 'SellerController@historic');

@@ -9,11 +9,6 @@ use App\User;
 use App\Order;
 use App\Deposit;
 use Illuminate\Foundation\Auth\User as AuthUser;
-<<<<<<< HEAD
-use Auth;
-=======
-
->>>>>>> d87ae52d31e17a0a95fce19b5ca54acba435d84a
 use App\ExtractRecord;
 use App\Seller;
 

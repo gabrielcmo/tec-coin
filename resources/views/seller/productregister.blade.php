@@ -9,7 +9,7 @@
         <hr>
     </div>
     <br>
-    <form action="/seller/products" enctype="multipart/form-data" method="POST">
+    <form action="/seller/products/store" enctype="multipart/form-data" method="POST">
         <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">

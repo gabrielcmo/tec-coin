@@ -3,21 +3,26 @@
 @section('content')
 
 <div class="container">
-    <?php $product = app(App\Product::class)->where('id', $_POST["id"])->first(); ?>
+    <?php
+        use App\Http\Controllers\SellerController;
+
+        $product = app(App\Product::class)->where('id', $_POST["id"])->first(); 
+    ?>
     <br>
     <div>
         <h1 class="display-4"><strong>Editar produto</strong></h1>
         <hr>
     </div>
     <br>
-    <form action="/seller/products" enctype="multipart/form-data" method="POST">
+    <form action="/seller/products/update" enctype="multipart/form-data" method="POST">
         <div class="row">
                 <div class="col-md-6">
+                <input type="hidden" name="id" value="{{ $_POST["id"] }}">
                     <div class="form-group">
                         <label for="nome">Nome</label>
                     <input type="text" name="name" class="form-control" id="nome" aria-describedby="nome" placeholder="{{ $product->name }}">
                     </div>
-                    <input type="hidden" name="type_id" value="{{ app(App\Http\Controllers\SellerController::class)->type_id_userProduct(Auth::user()->user_type_id) }}">
+                    <input type="hidden" name="type_id" value="{{ Auth::user()->user_type_id }}">
                     <div class="form-group">
                         <label for="valor">Valor</label>
                         <input type="number" name="value" class="form-control" id="valor" aria-describedby="valor" placeholder="{{ $product->value }}">

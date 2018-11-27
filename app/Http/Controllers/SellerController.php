@@ -9,6 +9,7 @@ use App\Seller;
 use App\Buyer;
 use App\OrderStatus;
 use App\Product;
+use App\Orders;
 
 class SellerController extends Controller
 {
@@ -16,11 +17,16 @@ class SellerController extends Controller
     {
         $this->middleware('auth');
     }
-    public function type_id_userProduct($id){
+    public static function type_id_userProduct($id){
         if($id == 3){
-
+            return 1;
+        }elseif($id == 4){
+            return 2;
+        }elseif($id == 5){
+            return 3;
         }
 
+        return false;
     }
     public function products()
     {
@@ -35,15 +41,15 @@ class SellerController extends Controller
         return view ('seller.editproduct');
     }
 
-    public function updateProduct(Request $r , $id)
+    public function updateProduct(Request $r)
     {
+        $id = $r["id"];
+
         // Atualizar dados de um produto
         Product::where('id', $id)->update(['name' => $r['name']]);
         Product::where('id', $id)->update(['value' => $r['value']]);
         Product::where('id', $id)->update(['description' => $r['description']]);
         Product::where('id', $id)->update(['image' => $r['image']]);
-        //Alterar o tipo de Produto?
-        Product::where('id', $id)->update(['type_id' => $r['type']]);
         return view('home');
     }
 
@@ -63,7 +69,7 @@ class SellerController extends Controller
     public function storeProduct(Request $r)
     {
         // Receber dados do form de cadastro de produtos
-        $product = new Product;
+        $product = new Product();
         $product->name = $r['name'];
         $product->value = $r['value'];
         $product->description = $r['description'];
@@ -82,6 +88,14 @@ class SellerController extends Controller
         $orders = Order::where('seller_id', $idseller)->where('status_id', 1)->get();
         
         return view('seller.pendingorders', compact('orders','all_products'));
+    }
+
+    public function historic(){
+        $id = Auth::user()->id;
+
+        $ordersApprovedOFSeller = Orders::where([['seller_id', '=' , $id], ['status_id', '=', '2']])->get();
+        
+        return view('seller.historic')->with(compact('ordersApprovedOFSeller'));
     }
 
     public function acceptOrder($id)

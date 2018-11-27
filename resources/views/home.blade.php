@@ -26,7 +26,7 @@
                                 <a href="/products/create" class="list-group-item list-group-item-action">Cadastro de Produtos</a>
                                 <a href="/seller/products" class="list-group-item list-group-item-action">Listagem de produtos</a>
                                 <a href="/seller/orders" class="list-group-item list-group-item-action">Consultar Pedidos</a>
-                                <a href="/seller/orders/historic" class="list-group-item list-group-item-action">Histórico de Compras</a>
+                                <a href="/seller/orders/historic" class="list-group-item list-group-item-action">Histórico de Vendas</a>
                             @endif
                         </div>
                     </div>
