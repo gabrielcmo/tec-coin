@@ -45,17 +45,7 @@ class BuyerController extends Controller
         $balance = self::toBalance($orders, $deposits);
         return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
     }
-
-    public static function balance(){
-        $idUser = Auth::user()->id;
-        $loggedBuyer = Buyer::where("user_id", $idUser)->value('id');
-        $deposits = Deposit::where("buyer_id", $loggedBuyer)->get();
-        $orders = Order::where(["buyer_id" => $loggedBuyer, "status_id" => 1, "status_id" => 2])->get();
-        $displayExtract = self::toExtract($orders, $deposits);
-        $balance = self::toBalance($orders, $deposits);
-        return $balance;
-    }
-
+    
     public function orderProduct(Request $r)
     {
         //Não comprar duas vezes

@@ -21,7 +21,6 @@
                                 <a href="/users" class="list-group-item list-group-item-action">Consulta de Usuários</a>
                                 <a href="/sellers" class="list-group-item list-group-item-action">Consultar Vendedor</a>
                             @elseif (Auth::user()->user_type_id == 2)
-                                <h3>Adicionar alguma forma de mostrar o balanço do usuário</h3>
                                 <p>Dinheiro: {{ $extract["balance"] }} Tcs</p>
                                 <a href="/buyer/products" class="list-group-item list-group-item-action">Listagem de Produtos</a>
                                 <a href="/buyer/balance" class="list-group-item list-group-item-action">Consultar Extrato</a>

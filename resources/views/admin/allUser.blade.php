@@ -12,8 +12,17 @@
             <br>
             <?php
                 use App\Http\Controllers\BuyerController;
+                use App\Deposit;
+                use App\Order;
+                use App\Buyer;
 
-                $balance = BuyerController::balance();
+                $buyer = Buyer::all();
+                foreach ($buyer as $key => $value) {
+                    $deposits = Deposit::where("buyer_id", $value->id)->get();
+                    $orders = Order::where(["buyer_id" => $value->id, "status_id" => 1, "status_id" => 2])->get();
+                    $balance = BuyerController::toBalance($orders, $deposits);
+                }
+
             ?>
             @if (!isset($AllUsers))
                 <h1>Nenhum usuário</h1>

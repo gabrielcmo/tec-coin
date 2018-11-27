@@ -20,8 +20,7 @@
                         <th scope="col">Tipo de Vendedor</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Senha</th>
-                        <th scope="col">Ações</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,8 +32,7 @@
                         <td>{{$tipoproduto}}</td>
                         <td>{{$seller->name}}</td>
                         <td>{{$seller->email}}</td>
-                        <td>?</td>
-                        <td><a href="#" class="btn btn-warning">Editar</a>  | <a href="#" class="btn btn-danger">Excluir</a></td>
+                        <td><a href="#" class="btn btn-warning">Editar</a>  &nbsp; <a href="#" class="btn btn-danger">Excluir</a></td>
                     </tr>
                 @endforeach
                 </tbody>
