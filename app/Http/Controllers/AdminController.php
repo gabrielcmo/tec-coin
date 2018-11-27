@@ -28,10 +28,9 @@ class AdminController extends Controller
             $user->save();
 
             $idBuyer = Buyer::orderBy('id', 'desc')->value('id');
-            $deposits = Deposit::where("buyer_id", $idBuyer)->get();
-            $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
-            $balance = BuyerController::toBalance($orders, $deposits);
-            
+            $extract = BuyerController::extract($idBuyer);
+            $balance = $extract["balance"];
+    
             return view('home');
         }elseif($typeuser == 3 || $typeuser == 4 || $typeuser == 5){
             $user = new Seller();

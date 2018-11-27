@@ -26,8 +26,18 @@ class BuyerController extends Controller
         return view("buyer.products" , compact('storeProducts', 'xeroxProducts' , 'canteenProducts'));
     }
 
-    public static function extract()
+    public static function extract($idBuyer = NULL)
     {
+
+        if(isset($idBuyer)){
+            $loggedBuyer = $idBuyer;
+            $deposits = Deposit::where("buyer_id", $idBuyer)->get();
+            $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
+            $displayExtract = self::toExtract($orders, $deposits);
+            $balance = self::toBalance($orders, $deposits);
+            return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
+        }
+
         $idUser = Auth::user()->id;
         $idUserType = Auth::user()->user_type_id;
 
