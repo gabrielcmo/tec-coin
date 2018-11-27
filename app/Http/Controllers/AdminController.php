@@ -9,12 +9,42 @@ use App\Admin;
 use App\Balance;
 use App\Buyer;
 use App\Seller;
-use App\Order;
-use App\Deposit;
-
 
 class AdminController extends Controller
 {
+    public static function registerUsers($id, $typeuser) {
+        if($typeuser == 1){
+            $user = new Admin();
+            $user->user_id =  $id;
+            $user->save();
+
+            return view('admin.home');
+        }elseif($typeuser == 2){
+            $user = new Buyer();
+            $user->balance = 0;
+            $user->user_id =  $id;
+            $user->save();
+
+            return view('admin.home');
+        }elseif($typeuser == 3 || $typeuser == 4 || $typeuser == 5){
+            $user = new Seller();
+            $user->user_id =  $id;
+
+            if($typeuser == 3){
+                $typeuser = 1;
+            }elseif($typeuser == 4){
+                $typeuser = 2;
+            }else{
+                $typeuser = 3;
+            }
+            $user->product_type_id = $typeuser;
+            $user->save();
+
+            return view('admin.home');
+        }
+
+        return false;
+    }
     public function buyers()
     {
         $users = UserModel::where('user_type_id', UserModel::$TYPE_BUYER)->get();
@@ -23,7 +53,7 @@ class AdminController extends Controller
 
     public function sellers()
     {
-        $sellers = User::where('user_type_id', 3)->orWhere('user_type_id', 4)->orWhere('user_type_id', 5)->get();
+        $sellers = User::where('user_type_id', 3)->get();
         return view('admin.AllSellers', compact('sellers'));
     }
 
@@ -73,29 +103,6 @@ class AdminController extends Controller
     }
     public function listAllUsers() {
         $AllUsers = User::where('user_type_id', 2)->get();
-
-        foreach ($AllUsers as $user) {
-            $buyer = Buyer::where("user_id", $user->id)->first();
-            $buyer->balance = self::toBalance($buyer->id);
-            $buyers[] = $buyer;
-        }
-
-        return view ('admin.allUser' , compact('AllUsers', 'buyers'));
-    }
-
-    public function toBalance($buyerId) {
-        $deposits = Deposit::where("buyer_id", $buyerId)->get();
-        $orders = Order::where(["buyer_id" => $buyerId, "status_id" => 1, "status_id" => 2])->get();
-        
-        $balance = 0;
-        foreach ($orders as $order) {
-            $balance -= $order->value;
-        }
-        
-        foreach ($deposits as $deposit) {
-            $balance += $deposit->value;
-        }
-
-        return $balance;
+        return view ('admin.allUser' , compact('AllUsers'));
     }
 }
