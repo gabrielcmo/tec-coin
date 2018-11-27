@@ -19,6 +19,7 @@ class CreateSellersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_type_id')->unsigned();
             $table->foreign('product_type_id')->references('id')->on('product_types');
+            $table->timestamps();
         });
     }
 

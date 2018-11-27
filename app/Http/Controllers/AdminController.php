@@ -9,6 +9,8 @@ use App\Admin;
 use App\Balance;
 use App\Buyer;
 use App\Seller;
+use App\Deposit;
+use App\Order;
 use App\Http\Controllers\BuyerController;
 
 class AdminController extends Controller
@@ -19,18 +21,18 @@ class AdminController extends Controller
             $user->user_id =  $id;
             $user->save();
 
-            return view('admin.home');
+            return view('home');
         }elseif($typeuser == 2){
             $user = new Buyer();
             $user->user_id =  $id;
             $user->save();
 
-            $idBuyer = Buyer::orderBy('id', 'desc')->value('id')->first();
+            $idBuyer = Buyer::orderBy('id', 'desc')->value('id');
             $deposits = Deposit::where("buyer_id", $idBuyer)->get();
             $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
             $balance = BuyerController::toBalance($orders, $deposits);
             
-            return view('admin.home');
+            return view('home');
         }elseif($typeuser == 3 || $typeuser == 4 || $typeuser == 5){
             $user = new Seller();
             $user->user_id =  $id;
@@ -45,7 +47,7 @@ class AdminController extends Controller
             $user->product_type_id = $typeuser;
             $user->save();
 
-            return view('admin.home');
+            return view('home');
         }
 
         return false;
