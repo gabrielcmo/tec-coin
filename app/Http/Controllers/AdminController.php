@@ -22,10 +22,14 @@ class AdminController extends Controller
             return view('admin.home');
         }elseif($typeuser == 2){
             $user = new Buyer();
-            $user->balance = 0;
             $user->user_id =  $id;
             $user->save();
 
+            $idBuyer = Buyer::orderBy('id', 'desc')->value('id')->first();
+            $deposits = Deposit::where("buyer_id", $idBuyer)->get();
+            $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
+            $balance = BuyerController::toBalance($orders, $deposits);
+            
             return view('admin.home');
         }elseif($typeuser == 3 || $typeuser == 4 || $typeuser == 5){
             $user = new Seller();
@@ -76,10 +80,11 @@ class AdminController extends Controller
         // Mostrar mensagem de sucesso (se der tempo)
     }
 
-    public function destroyUser($id)
+    public function destroyUser()
     {
+        $id = $_POST["id"];
         // Remover o usuário da tabela mais específica (comprador, admin ou vendedor)
-        $user_select = DB::table('User')->where('id', $id)->value('user_type_id');
+        $user_select = UserModel::where('id', $id)->value('user_type_id');
         switch ($user_select) {
             case 1:
                 Admin::where('user_id', $id)->delete();

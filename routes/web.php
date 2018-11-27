@@ -9,7 +9,7 @@ Route::get('/register/mass', 'AdminController@massRegister');
 Route::get('/buyers', 'AdminController@buyers')->name('buyers');;
 Route::post('/buyers/deposit', 'AdminController@deposit');
 Route::get('/sellers', 'AdminController@sellers')->name('sellers');
-Route::delete('/user/{id}', 'AdminController@destroyUser');
+Route::post('/user/delete', 'AdminController@destroyUser');
 Route::get('/users', 'AdminController@listAllUsers');
 // Listar produtos
 // Deletar produtos
