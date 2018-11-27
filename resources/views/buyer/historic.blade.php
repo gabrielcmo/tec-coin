@@ -7,28 +7,34 @@
 @extends('layouts.app')
 
 @section('content')
-<?php
-use App\Buyer;
-use App\Http\Controllers\BuyerController;
-
-        $idBuyer = 2;
-        $extract = BuyerController::extract($idBuyer);
-        $balance = $extract["balance"];
-        echo $balance;
-?>
-
-    @if (empty($historic))
+<div class="container">
+    
+        @if (empty($historic))
         <h1>Como assim você não comprou nada ?! Vá ver alguns produtos!!</h1>
     @else
-        @foreach($historic as $historic)
-
-            ID Produto -> {{$historic->product_id}} <br/>
-            ID Comprador -> {{$historic->buyer_id}} <br/>
-            ID Vendedor -> {{$historic->seller_id}} <br/>
-            Status do Produto -> {{$historic->status_id}} <br/>
-            Valor da Compra -> {{$historic->value}} <br/><br>
-
-        @endforeach
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID do Produto</th>
+                    <th>ID do Comprador</th>
+                    <th>ID do Vendedor</th>
+                    <th>Status</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($historic as $historic)
+                    <tr>
+                        <td>{{$historic->product_id}}</td>
+                        <td>{{$historic->buyer_id}}</td> 
+                        <td>{{$historic->seller_id}}</td>
+                        <td>{{$historic->status_id}}</td>
+                        <td>{{$historic->value}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @endif
 
+</div>
 @endsection
