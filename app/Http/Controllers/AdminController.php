@@ -69,7 +69,7 @@ class AdminController extends Controller
         // validar dados (?)
         // ??
         // Depositar valor
-        $idbuyer = Buyer::where('id',$r['id'])->get();
+        $idbuyer = Buyer::where('id', $r['id'])->get();
         $balance = new Balance();
         $balance->value = $r['value'];
         $balance->admin_id = 1;

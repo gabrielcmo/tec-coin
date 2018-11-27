@@ -11,7 +11,6 @@ use App\Deposit;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use App\ExtractRecord;
 use App\Seller;
-use App\Buyers;
 use App\OrderStatus;
 use App\Orders;
 use Auth;
@@ -50,7 +49,7 @@ class BuyerController extends Controller
     {
         //Não comprar duas vezes
         $idUser = Auth::user()->id;
-        $idbuyer = Buyers::where('user_id', $idUser)->value('id');
+        $idbuyer = Buyer::where('user_id', $idUser)->value('id');
 
         $deposits = Deposit::where("buyer_id", $idbuyer)->get();
         $orders = Order::where(["buyer_id" => $idbuyer, "status_id" => 1, "status_id" => 2])->get();
@@ -63,7 +62,8 @@ class BuyerController extends Controller
         }
 
         // Fazer um pedido pelo id do produto
-        $idseller = Seller::where('product_type_id', $r['id_product'])->value('id');
+        $idseller = Seller::where('product_type_id', $r['id'])->value('id');
+
         $order = new Order();
         $order->product_id = $r['id'];
         $order->buyer_id = $idbuyer;

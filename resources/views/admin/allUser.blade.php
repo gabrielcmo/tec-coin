@@ -31,14 +31,12 @@
                     </thead>
                     <tbody>
                     @foreach($AllUsers as $user)
-                    <?php
-                        
-                        $idbuyer = Buyer::find($user->id)->value('id');
-                        $deposits = Deposit::where("buyer_id", $idbuyer)->get();
-                        $orders = Order::where(["buyer_id" => $idbuyer, "status_id" => 1, "status_id" => 2])->get();
-                        $balance = BuyerController::toBalance($orders, $deposits);
-                    
-                    ?>
+                        <?php
+                            $idBuyer = Buyer::where('user_id', $user->id)->value('id');
+                            $deposits = Deposit::where("buyer_id", $idBuyer)->get();
+                            $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
+                            $balance = BuyerController::toBalance($orders, $deposits);
+                        ?>
                         <tr>
                             <th scope="row">{{$user->id}}</th>
                             <td>{{$user->name}}</td>
@@ -46,11 +44,6 @@
                             <td>{{$balance}}</td>
                             <td>
                                 <div class="row">
-                                        <form action="/seller/products/edit" method="post">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $user->id }}">
-                                            &nbsp;<button class="btn btn-warning" type="submit">Editar</button>
-                                        </form>
                                         <form action="user/delete" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $user->id }}">

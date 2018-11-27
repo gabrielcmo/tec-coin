@@ -17,10 +17,12 @@ class CreateDepositsTable extends Migration
             $table->increments('id');
             $table->integer('value');
             $table->date('date');
-            $table->integer('buyer_id')->unsigned()->onDelete('cascade');
-            $table->foreign('buyer_id')->references('id')->on('buyers');
-            $table->integer('admin_id')->unsigned()->onDelete('cascade');
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->integer('buyer_id')->unsigned();
+            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade')
+            ->onUpdate('cascade'); 
+            $table->integer('admin_id')->unsigned();
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade')
+            ->onUpdate('cascade'); 
             $table->string('description');
             $table->timestamps();
         });
