@@ -10,6 +10,7 @@
     Product_ID -> {{$order->product_id}} <br/>
     Buyer_id -> {{$order->buyer_id}} <br/>
     Seller_ID -> {{$order->seller_id}} <br/>
+    OrderStatus_ID -> {{$order->id_order_status}} <br/>
     Valor -> {{$order->value}} <br/>
     @endforeach
 @endif

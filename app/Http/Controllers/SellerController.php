@@ -101,6 +101,8 @@ class SellerController extends Controller
     public function acceptOrder($id)
     {
         $selectedOrder = Order::find($id);
+        $idOrderStatus = $selectedOrder->id_order_status;
+        $orderstatus = OrderStatus::find($idOrderStatus);
         $selectedOrder->update(['status_id' => OrderStatus::$ACCEPTED]);
         return redirect()->action('SellerController@pendingOrders');    
     }

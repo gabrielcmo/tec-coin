@@ -9,10 +9,11 @@ Listando todas as ordens <br/>
     Product_ID -> {{$order->product_id}} <br/>
     Buyer_id -> {{$order->buyer_id}} <br/>
     Seller_ID -> {{$order->seller_id}} <br/>
+    OrderStatus_ID -> {{$order->id_order_status}} <br/>
     Valor -> {{$order->value}} <br/>
 
     <a href="{{  url("seller/orders/$order->id/accept/$order->buyer_id/$order->product_id") }}">Aceitar</a>
-    <a href="{{  url("seller/orders/$order->id/deny") }}">Recusar</a>
+    <a href="{{  url("seller/orders/$order->id/deny") }}">Recusar</a><br><br>
 @endforeach
 
 Listando todos os produtos com os ids presentes nas orders <br/>

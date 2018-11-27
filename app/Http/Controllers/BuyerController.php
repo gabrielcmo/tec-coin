@@ -11,6 +11,10 @@ use App\Deposit;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use App\ExtractRecord;
 use App\Seller;
+use App\Buyers;
+use App\OrderStatus;
+use App\Orders;
+use Auth;
 
 class BuyerController extends Controller
 {
@@ -56,20 +60,31 @@ class BuyerController extends Controller
 
     public function orderProduct(Request $r)
     {
+        //Não comprar duas vezes
         $iduser = Auth::user()->id;
+        $idbuyer = Buyers::where('user_id', $iduser)->value('id');
+        $existentOrder = Orders::where([['product_id', $r["id"]], ['buyer_id', $idbuyer]])->get();
+        if(count($existentOrder) !== 0){
+            return view('home');
+        }
+
         $valueUser = Buyer::where('user_id', $iduser)->value('balance');
         $value = Product::where('id' , $r['id'])->value('value');
         
-        if ($valueUser < $value) return view('buyer.error');
-        $iduser = Auth::user()->id;
-        $idbuyer = Buyer::where('user_id', $iduser)->value('id');
+        if ($valueUser < $value){
+            return view('buyer.error');
+        }
         // Fazer um pedido pelo id do produto
         $idseller = Seller::where('product_type_id', $r['id_product'])->value('id');
-        $order = new Order;
+        $order = new Order();
         $order->product_id = $r['id'];
         $order->buyer_id = $idbuyer;
         $order->seller_id = $idseller;
-        $order->status_id = 1;
+        $orderStatus = new OrderStatus();
+        $orderStatus->description = md5(rand(1, 100));
+        $orderStatus->save();
+        $order->status_id = OrderStatus::$ORDERED;
+        $order->id_order_status = OrderStatus::orderBy('id', 'desc')->value('id');
         $order->value = $value;
         $order->save();
         return view('home');

@@ -14,7 +14,6 @@
                 <th>Imagem</th>
                 <th>ID</th>
                 <th>Nome</th>
-                
                 <th>Valor</th>
                 <th>Descrição</th>
                 <th></th>

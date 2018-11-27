@@ -11,11 +11,11 @@ Produtos da Lojinha
 
     @csrf
     <input type="text" name="" id=""> <br/>
-    <input type="text" name="id" value="{{ $products->id }}" id=""> <br/>
+    <input type="hidden" name="id" value="{{ $products->id }}" id=""> <br/>
     <input type="text" name="id_product" value='{{$products->type_id}}'> <br/>
     Nome: {{$products->name}} <br/>
     Valor: {{$products->value}}
-    <img src="{{$products->image}}">
+    <img height="30" width="30" src="{{$products->image}}">
     <input type="submit" value="Comprar">
     </form>
 @endforeach
@@ -28,7 +28,7 @@ Produtos Xerox
     <input type="hidden" name="id" value='{{$products->id}}'>
     Nome: {{$products->name}} <br/>
     Valor: {{$products->value}} <br/>
-    <img src='{{$products->image}}'>
+    <img height="30" width="30" src='{{$products->image}}'>
     <input type="submit" value="Comprar">
     </form>
 @endforeach
@@ -43,7 +43,7 @@ Produtos Cantina
     <input type="hidden" name="id_product" value='{{$products->type_id}}'> <br/>
     Nome: {{$products->name}} <br/>
     Valor: {{$products->value}} <br/>
-    <img src="{{$products->image}}">
+    <img height="30" width="30" src="{{$products->image}}">
     <input type="submit" value="Comprar">
 </form>
 
