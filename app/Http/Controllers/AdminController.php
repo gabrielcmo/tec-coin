@@ -64,21 +64,22 @@ class AdminController extends Controller
         return view('admin.AllSellers', compact('sellers'));
     }
 
+    public function depositView(){
+        return view('admin.formdeposit');
+    }
+
     public function deposit(Request $r)
     {
-        // validar dados (?)
-        // ??
-        // Depositar valor
-        $idbuyer = Buyer::where('id', $r['id'])->get();
-        $balance = new Balance();
-        $balance->value = $r['value'];
-        $balance->admin_id = 1;
-        $balance->buyer_id = $idbuyer;
-        $balance->description = $r['description'];
-        $balance->date = getdate();
-        $balance->save();
+        $deposit = new Deposit();
+        $deposit->value = $r['value'];
+        $deposit->admin_id = $r["admin_id"];
+        $deposit->buyer_id = $r["buyer_id"];
+        $deposit->date = now();
+        $deposit->description = $r["description"];
+        $deposit->save();
         // Redirecionar para listagem de compradores
-        return view('admin.buyerslist');
+        $AllUsers = User::where('user_type_id', 2)->get();
+        return view('admin.allUser')->with(compact('AllUsers'));
         // Mostrar mensagem de sucesso (se der tempo)
     }
 

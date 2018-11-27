@@ -55,6 +55,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ ('/sellers') }}">Vendedores</a>
                     </li>
+
+                    <li class="nav-item">
+                            <a class="nav-link" href="{{ ('/deposit') }}">Depositar</a>
+                    </li>
                 @elseif (Auth::user()->user_type_id == 2)
 
                     <li class="nav-item">

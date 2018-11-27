@@ -1,24 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+        <?php
+            use App\Admin;
+        ?>
 
-    <form action='/seller/products'>
-    <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <form action='user/deposit' method="POST">
+        @csrf
 
-    <input type="text" name='name' id="">
-    <input type="number" id="">
-    <input type="text" name="description" id="">
-    <select name='type'>
-        <option value='1'>
-            Cantina
-        </option value='2'>
-            Lojinha
-        <option value='3'>
-            Xerox
-        </option>
-        
-    </select>
-    <input type="submit" value="Enviar">
+        ID DO USUARIO
+        <input type="number" name="buyer_id" id="">
+        <input type="hidden" name="admin_id" value="{{ Admin::where('user_id', Auth::user()->id)->value('id') }}">
+        VALOR
+        <input type="number" name="value" id="">
+        Descrição
+        <input type="text" name="description" id="">
+
+        <input type="submit" value="Enviar">
 
     </form>
 
