@@ -1,4 +1,11 @@
-<?php use App\Buyer; ?>
+<?php
+    use App\Deposit;
+    use App\Order;
+    use App\Buyer;
+    use App\Http\Controllers\BuyerController;
+    $extract = BuyerController::extract();
+?>
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,14 +18,11 @@
                         <div class="list-group">
                             @if (Auth::user()->user_type_id == 1)
                                 <a href="/register" class="list-group-item list-group-item-action">Cadastro de Usuário</a>
-                                <a href="/register/mass" class="list-group-item list-group-item-action">Cadastro de Usuários em Massa</a>
                                 <a href="/users" class="list-group-item list-group-item-action">Consulta de Usuários</a>
                                 <a href="/sellers" class="list-group-item list-group-item-action">Consultar Vendedor</a>
                             @elseif (Auth::user()->user_type_id == 2)
-                                <?php
-                                    $balance = Buyer::where('user_id', Auth::user()->id)->value('balance');
-                                ?>
-                                <h3>Seu saldo é de {{$balance}} reais.</h3>
+                                <h3>Adicionar alguma forma de mostrar o balanço do usuário</h3>
+                                <p>Dinheiro: {{ $extract["balance"] }} Tcs</p>
                                 <a href="/buyer/products" class="list-group-item list-group-item-action">Listagem de Produtos</a>
                                 <a href="/buyer/balance" class="list-group-item list-group-item-action">Consultar Extrato</a>
                                 <a href="/user/orders/historic" class="list-group-item list-group-item-action">Histórico de Compras</a>

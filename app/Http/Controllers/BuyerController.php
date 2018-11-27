@@ -27,7 +27,7 @@ class BuyerController extends Controller
         return view("buyer.products" , compact('storeProducts', 'xeroxProducts' , 'canteenProducts'));
     }
 
-    public function extract()
+    public static function extract()
     {
         $loggedBuyer = Buyer::where("user_id", Auth::user()->id)->first();
         $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
@@ -103,7 +103,7 @@ class BuyerController extends Controller
         return view('buyer.historic', compact('historic'));
     }
 
-    private function toExtract($orders, $deposits) {
+    private static function toExtract($orders, $deposits) {
         foreach ($orders as $order) {   
             $extractArray[] = new ExtractRecord($order->value, $order->description(), $order->created_at, "order");
         }
@@ -119,7 +119,7 @@ class BuyerController extends Controller
         return $extractArray;
     }
 
-    public function toBalance($orders, $deposits) {
+    public static function toBalance($orders, $deposits) {
         $balance = 0;
         foreach ($orders as $order) {
             $balance -= $order->value;
