@@ -41,3 +41,16 @@ a:hover.purple {
 .line{
     float: left;
 }
+
+.big{
+    font-size: 40px;
+}
+
+.image {
+    filter:contrast(60%) brightness(150%);
+    position: relative;
+    bottom: 30px;
+    /* half of image height */
+    right: 0px;
+    /* right space */
+}

@@ -8,33 +8,49 @@
 
 @section('content')
 <div class="container">
-    
-        @if (empty($historic))
+<br>
+        <div class="col-md-12">
+            <div>
+                <h1 class="display-4"><i class="material-icons big">all_inbox</i> <strong>Histórico</strong></h1>
+                <p class="lead">Confira aqui todas suas compras passadas</p>
+                <hr>
+            </div>
+            <br>
+    @if (empty($historic))
         <h1>Como assim você não comprou nada ?! Vá ver alguns produtos!!</h1>
     @else
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID do Produto</th>
-                    <th>ID do Comprador</th>
-                    <th>ID do Vendedor</th>
-                    <th>Status</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($historic as $historic)
+    <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{$historic->product_id}}</td>
-                        <td>{{$historic->buyer_id}}</td> 
-                        <td>{{$historic->seller_id}}</td>
-                        <td>{{$historic->status_id}}</td>
-                        <td>{{$historic->value}}</td>
+                        <th scope="col">Nome Produto</th>
+                        <th scope="col">Nome Vendedor</th>
+                        <th scope="col">Status do compra</th>
+                        <th scope="col">Valor da compra</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($historic as $historic)
+                        <tr>
+                        <?php
+                        $productname = Product::where('id', $historic->product_id)->value('name');
+                        $productdescription = Product::where('id', $historic->product_id)->value('description');
+                        $whoSell = Seller::where('id', $historic->seller_id)->value('user_id');
+                        $whoSellUser = User::where('id', $whoSell)->value('name');
+                        $productStatus = OrderStatus::where('id', $historic->status_id)->value('description');
+                        ?>
+                            <td>{{$productname}}</td>
+                            <td>{{$whoSellUser}}</td>
+                            <td>{{$productStatus}}</td>
+                            <td>{{$historic->value}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
     @endif
-
 </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 @endsection

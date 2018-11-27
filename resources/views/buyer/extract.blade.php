@@ -6,7 +6,7 @@
         <br>
         <div class="col-md-12">
             <div>
-                <h1 class="display-4"><strong>Extrato</strong></h1>
+                <h1 class="display-4"><i class="material-icons big">attach_money</i><strong>Extrato</strong></h1>
                 <p class="lead">Confira aqui suas transações</p>
                 <hr>
             </div>
