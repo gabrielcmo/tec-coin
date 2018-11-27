@@ -31,7 +31,7 @@ class AdminController extends Controller
             $idBuyer = Buyer::orderBy('id', 'desc')->value('id');
             $extract = BuyerController::extract($idBuyer);
             $balance = $extract["balance"];
-    
+
             return view('home');
         }elseif($typeuser == 3 || $typeuser == 4 || $typeuser == 5){
             $user = new Seller();
@@ -85,11 +85,16 @@ class AdminController extends Controller
 
     public function destroyUser($id)
     {
-        $user = UserModel::where('id', $id)->first();
-        $view = $user->user_type_id == UserModel::$TYPE_BUYER ? 'admin.allUser' : 'admin.allSellers';
-        $username = $user->name;
-        $user->delete();
-        return  view($view)->with('success','Usuário $username deletados com sucesso');
+        $usertypeid = UserModel::where('id', $id)->value('user_type_id');
+        $tipo = $usertypeid == UserModel::$TYPE_BUYER ? 2 : 3;
+        $username = UserModel::where('id', $id)->value('name');
+        UserModel::where('id', $id)->delete();
+        if ($tipo == 2){
+          return redirect('/users');
+        }
+        else{
+          return redirect('/sellers');
+        }
     }
 
     public function massRegister()

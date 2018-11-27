@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('user_type_id')->unsigned();
             $table->string('image')->default('imguser.png');
-            $table->foreign('user_type_id')->references('id')->on('user_types')->ondelete('cascade');
+            $table->foreign('user_type_id')->references('id')->on('user_types')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

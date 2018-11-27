@@ -18,11 +18,11 @@ class CreateOrdersTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('buyer_id')->unsigned();
-            $table->foreign('buyer_id')->references('id')->on('buyers');
+            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
             $table->integer('seller_id')->unsigned();
-            $table->foreign('seller_id')->references('id')->on('sellers');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->integer('status_id')->unsigned();
-            $table->foreign('status_id')->references('id')->on('order_status');
+            $table->foreign('status_id')->references('id')->on('order_status')->onDelete('cascade');
             $table->integer('value');
             $table->timestamps();
         });
