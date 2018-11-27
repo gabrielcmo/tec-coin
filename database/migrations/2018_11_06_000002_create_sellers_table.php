@@ -18,7 +18,8 @@ class CreateSellersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('product_type_id')->unsigned();
-            $table->foreign('product_type_id')->references('id')->on('product_types');
+            $table->foreign('product_type_id')->references('id')->on('product_types')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

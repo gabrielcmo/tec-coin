@@ -9,8 +9,10 @@ Route::get('/register/mass', 'AdminController@massRegister');
 Route::get('/buyers', 'AdminController@buyers')->name('buyers');;
 Route::post('/buyers/deposit', 'AdminController@deposit');
 Route::get('/sellers', 'AdminController@sellers')->name('sellers');
-Route::post('/user/delete', 'AdminController@destroyUser');
+Route::delete('user/{id}/delete', 'AdminController@destroyUser'); //TODO: Mudar para delete (http method)
 Route::get('/users', 'AdminController@listAllUsers');
+Route::get('/deposit', 'AdminController@depositView');
+Route::post('user/deposit', 'AdminController@deposit');
 // Listar produtos
 // Deletar produtos
 

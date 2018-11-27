@@ -12,7 +12,6 @@
         <thead>
             <tr>
                 <th>Imagem</th>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Valor</th>
                 <th>Descrição</th>
@@ -23,7 +22,6 @@
             @foreach ($listproducts as $item)
                 <tr>
                     <td><img class="rounded-circle" src="{{ url("/images/$item->image") }}" width="59" height="59" alt=""></td>
-                    <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                   
                     <td>{{ $item->value }}</td>

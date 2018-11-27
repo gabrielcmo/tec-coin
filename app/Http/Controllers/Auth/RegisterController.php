@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Controllers\AdminController;
 
 class RegisterController extends Controller
 {
@@ -60,7 +61,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['required', 'numeric', 'min:0', 'max:4'],
+            'role' => ['required', 'numeric', 'min:0', 'max:6'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ],
         [
@@ -87,11 +88,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $success=true;
-        return User::create([
+        User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'user_type_id' => $data['role'],
             'password' => Hash::make($data['password']),
         ]);
+        
+        $id = User::orderBy('id', 'desc')->value('id');
+        $idtype = $data['role'];
+        AdminController::registerUsers($id, $idtype);
     }
 }

@@ -12,6 +12,9 @@
             </div>
             <h6><strong> Total: {{ $balance }} TCs</strong></h6>
             <br>
+            @if (empty($displayExtract))
+                <h1>Nenhum extrato no momento</h1>
+            @else
             <table class="table">
                 <thead>
                     <tr>
@@ -32,6 +35,7 @@
                     @endforeach
                 </tbody>
             </table>
+            @endif
         </div>
     </div>
     

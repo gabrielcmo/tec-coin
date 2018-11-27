@@ -9,6 +9,9 @@ use App\Admin;
 use App\Balance;
 use App\Buyer;
 use App\Seller;
+use App\Deposit;
+use App\Order;
+use App\UserType;
 use App\Http\Controllers\BuyerController;
 
 class AdminController extends Controller
@@ -19,18 +22,17 @@ class AdminController extends Controller
             $user->user_id =  $id;
             $user->save();
 
-            return view('admin.home');
+            return view('home');
         }elseif($typeuser == 2){
             $user = new Buyer();
             $user->user_id =  $id;
             $user->save();
 
-            $idBuyer = Buyer::orderBy('id', 'desc')->value('id')->first();
-            $deposits = Deposit::where("buyer_id", $idBuyer)->get();
-            $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
-            $balance = BuyerController::toBalance($orders, $deposits);
-            
-            return view('admin.home');
+            $idBuyer = Buyer::orderBy('id', 'desc')->value('id');
+            $extract = BuyerController::extract($idBuyer);
+            $balance = $extract["balance"];
+    
+            return view('home');
         }elseif($typeuser == 3 || $typeuser == 4 || $typeuser == 5){
             $user = new Seller();
             $user->user_id =  $id;
@@ -45,7 +47,7 @@ class AdminController extends Controller
             $user->product_type_id = $typeuser;
             $user->save();
 
-            return view('admin.home');
+            return view('home');
         }
 
         return false;
@@ -62,44 +64,32 @@ class AdminController extends Controller
         return view('admin.AllSellers', compact('sellers'));
     }
 
+    public function depositView(){
+        return view('admin.formdeposit');
+    }
+
     public function deposit(Request $r)
     {
-        // validar dados (?)
-        // ??
-        // Depositar valor
-        $idbuyer = Buyer::where('id',$r['id'])->get();
-        $balance = new Balance();
-        $balance->value = $r['value'];
-        $balance->admin_id = 1;
-        $balance->buyer_id = $idbuyer;
-        $balance->description = $r['description'];
-        $balance->date = getdate();
-        $balance->save();
+        $deposit = new Deposit();
+        $deposit->value = $r['value'];
+        $deposit->admin_id = $r["admin_id"];
+        $deposit->buyer_id = $r["buyer_id"];
+        $deposit->date = now();
+        $deposit->description = $r["description"];
+        $deposit->save();
         // Redirecionar para listagem de compradores
-        return view('admin.buyerslist');
+        $AllUsers = User::where('user_type_id', 2)->get();
+        return view('admin.allUser')->with(compact('AllUsers'));
         // Mostrar mensagem de sucesso (se der tempo)
     }
 
-    public function destroyUser()
+    public function destroyUser($id)
     {
-        $id = $_POST["id"];
-        // Remover o usuário da tabela mais específica (comprador, admin ou vendedor)
-        $user_select = UserModel::where('id', $id)->value('user_type_id');
-        switch ($user_select) {
-            case 1:
-                Admin::where('user_id', $id)->delete();
-                break;
-            case 2:
-                Buyer::where('user_id', $id)->delete();
-                break;
-            default:
-                Seller::where('user_id',$id)->delete();
-        }
-        // Remover os dados da tabela usuário
-            User::where('id',$id)->delete();
-        // Redirecionar para listagem de usuários
-            return  view('admin.userlist')->with('success','Usuarios deletados com sucesso');
-        // Mostrar mensagem de sucesso (se der tempo)
+        $user = UserModel::where('id', $id)->first();
+        $view = $user->user_type_id == UserModel::$TYPE_BUYER ? 'admin.allUser' : 'admin.allSellers';
+        $username = $user->name;
+        $user->delete();
+        return  view($view)->with('success','Usuário $username deletados com sucesso');
     }
 
     public function massRegister()

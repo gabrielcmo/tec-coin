@@ -16,10 +16,9 @@
         <option value='3'>
             Xerox
         </option>
-        <option>
-        </option>
-        <input type="submit" value="Enviar">
+        
     </select>
+    <input type="submit" value="Enviar">
 
     </form>
 

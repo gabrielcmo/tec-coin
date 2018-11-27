@@ -15,15 +15,6 @@
                 use App\Deposit;
                 use App\Order;
                 use App\Buyer;
-
-                $buyer = Buyer::all();
-                
-                foreach ($buyer as $key => $value) {
-                    $deposits = Deposit::where("buyer_id", $value->id)->get();
-                    $orders = Order::where(["buyer_id" => $value->id, "status_id" => 1, "status_id" => 2])->get();
-                    $balance = BuyerController::toBalance($orders, $deposits);
-                }
-
             ?>
             @if (!isset($AllUsers))
                 <h1>Nenhum usuário</h1>
@@ -40,6 +31,12 @@
                     </thead>
                     <tbody>
                     @foreach($AllUsers as $user)
+                        <?php
+                            $idBuyer = Buyer::where('user_id', $user->id)->value('id');
+                            $deposits = Deposit::where("buyer_id", $idBuyer)->get();
+                            $orders = Order::where(["buyer_id" => $idBuyer, "status_id" => 1, "status_id" => 2])->get();
+                            $balance = BuyerController::toBalance($orders, $deposits);
+                        ?>
                         <tr>
                             <th scope="row">{{$user->id}}</th>
                             <td>{{$user->name}}</td>
@@ -47,15 +44,10 @@
                             <td>{{$balance}}</td>
                             <td>
                                 <div class="row">
-                                        <form action="/seller/products/edit" method="post">
+                                        <form action="user/{{$user->id}}/delete" method="POST">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $user->id }}">
-                                            &nbsp;<button class="btn btn-warning" type="submit">Editar</button>
-                                        </form>
-                                        <form action="user/delete" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $user->id }}">
-                                            &nbsp;<button class="btn btn-danger" type="submit">Excluir</button>
+                                            {{ method_field('DELETE') }}
+                                        <button class="btn btn-danger" type="submit">Excluir</button>
                                         </form>
                                     </div>
                             </td>
