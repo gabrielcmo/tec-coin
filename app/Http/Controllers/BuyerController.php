@@ -25,32 +25,11 @@ class BuyerController extends Controller
 
     public function extract()
     {
-        // Pegar todos os valores que foram adicionados à conta do comprador (usuário logado)
         $loggedBuyer = Buyer::where("user_id", Auth::user()->id)->first();
         $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
-
-        // Pegar todas as compras realizadas por esse usuário cujo status seja igual a (1) Ordered ou 2 (Accepted)
         $orders = Order::where(["buyer_id" => $loggedBuyer->id, "status_id" => 1, "status_id" => 2])->get();
-        
-        /* Mergear os dois arrays em um único array com o seguinte padrão:
-
-            // Para uma compra:
-            value: 5
-            description:"Compra de Coxinha"
-            date:14/11/2018
-            type:saida
-
-            // Para um recebimento:
-            value: 30
-            description:"Melhor nota da turma"
-            date:14/11/2018
-            type:entrada
-        */
         $displayExtract = self::toExtract($orders, $deposits);
-
-        // Pegar o saldo do usuário
         $balance = self::toBalance($orders, $deposits);
-        
         return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
     }
 

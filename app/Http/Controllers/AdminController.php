@@ -9,6 +9,8 @@ use App\Admin;
 use App\Balance;
 use App\Buyer;
 use App\Seller;
+use App\Order;
+use App\Deposit;
 
 
 class AdminController extends Controller
@@ -71,6 +73,29 @@ class AdminController extends Controller
     }
     public function listAllUsers() {
         $AllUsers = User::where('user_type_id', 2)->get();
-        return view ('admin.allUser' , compact('AllUsers'));
+
+        foreach ($AllUsers as $user) {
+            $buyer = Buyer::where("user_id", $user->id)->first();
+            $buyer->balance = self::toBalance($buyer->id);
+            $buyers[] = $buyer;
+        }
+
+        return view ('admin.allUser' , compact('AllUsers', 'buyers'));
+    }
+
+    public function toBalance($buyerId) {
+        $deposits = Deposit::where("buyer_id", $buyerId)->get();
+        $orders = Order::where(["buyer_id" => $buyerId, "status_id" => 1, "status_id" => 2])->get();
+        
+        $balance = 0;
+        foreach ($orders as $order) {
+            $balance -= $order->value;
+        }
+        
+        foreach ($deposits as $deposit) {
+            $balance += $deposit->value;
+        }
+
+        return $balance;
     }
 }
