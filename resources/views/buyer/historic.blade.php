@@ -26,7 +26,7 @@
                 @foreach($historic as $historic)
                     <tr>
                         <td>{{$historic->product->name}}</td>
-                        <td>{{$historic->buyer_id->user->name}}</td>
+                        <td>{{$historic->seller->user->name}}</td>
                         <td>{{$historic->status->description}}</td>
                         <td>{{$historic->value}}</td>
                     </tr>
