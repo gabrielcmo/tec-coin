@@ -74,7 +74,7 @@ class BuyerController extends Controller
 
 
             $value = Product::where('id' , $r['id'])->value('value');
-
+            
             if(($balance - $valorGasto) < $value){
 
             }
@@ -85,8 +85,8 @@ class BuyerController extends Controller
 
         // Fazer um pedido pelo id do produto
         $product = Product::where('id', $r['id'])->value('type_id');
-        $idseller = Seller::where('product_type_id', $product)->value('user_id');
-
+        $idseller = Seller::where('product_type_id', $product)->value('id');
+        $value = Product::where('id' , $r['id'])->value('value');
         $order = new Order();
         $order->product_id = $r['id'];
         $order->buyer_id = $idbuyer;
