@@ -33,9 +33,6 @@
                 </h4>
                 <br>
                 <div class="row">
-                <h1>Produtos da Lojinha</h1>
-                </div>
-                <div class="row">
                         @foreach($storeProducts as $products)
                         <div class="line">
                         <div class="col-md-3 col-sm-4">
@@ -45,18 +42,20 @@
                                     <div class="card" style="width: 270px;">
                                     <img class="card-img-top" width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{$products->name}}</h5>
+                                            <h5 class="card-title"><strong>{{$products->name}}</strong></h5>
                                             <p class="card-text lead">{{$products->description}}</p>
+                                            <div class="text-right">
                                             <img src="{{url('/images/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt=""> {{$products->value}}
                                             <input type="submit" class="btn text-light roxo-1" value="Comprar">
+                                            </div>
                                         </div>
                                     </div>
                             </form>
                         </div>
                         </div>
                         @endforeach
-                        <div class="row">
-                        <h1>Produtos da Xerox</h1>
+                        <!-- <div class="row">
+                        <h4> <i class="material-icons">local_mall</i> Lojinha  </h4>
                         </div>
                         @foreach($xeroxProducts as $products)
                         <div class="line">
@@ -99,7 +98,7 @@
                                 </form>
                             </div>
                         </div>
-                        @endforeach
+                        @endforeach -->
                     </div>
                 </div>
             </div>

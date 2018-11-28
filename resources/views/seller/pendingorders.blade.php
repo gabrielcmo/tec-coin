@@ -27,10 +27,12 @@
                 @if($i == 0 || $i % 4 == 0)
                     <div class="row">
                 @endif
-
                 <div class="col-md-3 col-sm-4">
                     <div class="card" style="width: 270px;">
-                        <img class="card-img-top" src="{{url('/image/'.$orders[$i]->product->image)}}" alt="Card image cap">
+                    <?php 
+                    $debug = $orders[$i]->product->image;
+                    ?>
+                        <img class="card-img-top" src="{{ url("images/$debug") }}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title"><strong>{{ $orders[$i]->product->name }}</strong></h5>
                             <p class="card-text lead"> {{ $orders[$i]->product->description }}</p>
