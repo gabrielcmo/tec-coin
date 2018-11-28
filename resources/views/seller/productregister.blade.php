@@ -9,6 +9,7 @@
         <hr>
     </div>
     <br>
+    <?php use App\Seller; ?>
     <form action="/seller/products/store" enctype="multipart/form-data" method="POST">
         @csrf
         <div class="row">
@@ -17,26 +18,21 @@
                     <label for="nome">Nome</label>
                     <input type="text" name="name" class="form-control" id="nome" aria-describedby="nome" placeholder="Computador">
                 </div>
-                
-                <input type="hidden" name="type_id" value="{{ app(App\Http\Controllers\SellerController::class)->type_id_userProduct(Auth::user()->user_type_id) }}">
-                
+                <input type="hidden" name="type_id" value="{{ Seller::where('user_id', Auth::user()->id)->value('product_type_id') }}">
                 <div class="form-group">
                     <label for="valor">Valor</label>
                     <input type="number" name="value" class="form-control" id="valor" aria-describedby="valor" placeholder="1000">
                 </div>
-                
                 <div class="form-group">
                     <label for="desc">Descrição</label>
                     <input type="text" name="description" class="form-control" id="desc" placeholder="Lojinha">
                 </div>
             </div>
-
             <div class="col-md-6 text-center">
                 <br><br>
                 <input type="file" name="image" id="foto">
             </div>
         </div>
-
         <button type="submit" class="btn btn-purple text-light">Registrar</button>
     </form>
 </div>
