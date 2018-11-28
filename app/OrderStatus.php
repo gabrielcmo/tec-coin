@@ -13,4 +13,6 @@ class OrderStatus extends Model
     public static $CANCELED = "3";
     
     protected $fillable = ['description'];
+
+    public function orders() { return $this->hasMany('App\Orders'); }
 }

@@ -26,15 +26,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-    public function name() {
-	    return $this->hasOne('App\Buyer');
-    }
-    public function name2()
-    {
-        return $this->hasOne('App\Seller');
-    }
-}
+    protected $hidden = ['password', 'remember_token'];
 
+    public function admin() { return $this->hasOne('App\Admin'); }
+    public function buyer() { return $this->hasOne('App\Buyer'); }
+    public function seller() { return $this->hasOne('App\Seller'); }
+    public function userType() { return $this->belongsTo('App\UserType'); }
+}
