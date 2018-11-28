@@ -4,6 +4,9 @@
       use App\Buyer;
       use App\Http\Controllers\BuyerController;
       $extract = BuyerController::extract();
+
+      $dinheiroGasto = BuyerController::dinheiroGasto();
+      $dinheiroPraGastar = $extract["balance"] - $dinheiroGasto;
 ?>
 @extends('layouts.app')
 
@@ -13,7 +16,8 @@
         <div class="col-md-12">
             <div>
                 <h1 class="display-4"><strong>Bem vindo, {{ Auth::user()->name }}.</strong></h1>
-                <p class="lead">Você tem {{ $extract["balance"] }} TCs</p>
+                <p class="lead">Você tem {{ $dinheiroPraGastar }} TCs disponíveis</p>
+                <p class="lead">Você possui {{ $dinheiroGasto }} Tcs em pedidos pendentes</p>
                 <hr>
             </div>
             <br>
@@ -28,6 +32,9 @@
                     Lojinha
                 </h4>
                 <br>
+                <div class="row">
+                <h1>Produtos da Lojinha</h1>
+                </div>
                 <div class="row">
                         @foreach($storeProducts as $products)
                         <div class="line">
@@ -48,7 +55,11 @@
                         </div>
                         </div>
                         @endforeach
+                        <div class="row">
+                        <h1>Produtos da Xerox</h1>
+                        </div>
                         @foreach($xeroxProducts as $products)
+                        <div class="line">
                                         <div class="col-md-3 col-sm-4">
                                             <form action='/products/order' method='POST'>
                                                 @csrf
@@ -65,9 +76,13 @@
                                                     </div>
                                             </form>
                                         </div>
+                        </div>
                         @endforeach
-
+                        <div class="row">
+                        <h1>Produtos da Cantina</h1>
+                        </div>
                         @foreach($canteenProducts as $products)
+                        <div class="line">
                             <div class="col-md-3 col-sm-4">
                                 <form action='/products/order' method='POST'>
                                     @csrf
@@ -83,6 +98,7 @@
                                         </div>
                                 </form>
                             </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>

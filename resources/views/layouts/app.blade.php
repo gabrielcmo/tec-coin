@@ -25,7 +25,7 @@
 <body class="roxo-2">
 <div id="app">
      <nav class="navbar navbar-expand-lg sticky-top navbar-dark roxo-1">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{url('/images/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt="">
             {{ config('app.name', 'TecCoin') }}
         </a>

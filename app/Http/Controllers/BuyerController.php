@@ -40,19 +40,35 @@ class BuyerController extends Controller
 
         $idUser = Auth::user()->id;
         $idUserType = Auth::user()->user_type_id;
+        $loggedBuyer = Buyer::where("user_id", $idUser)->first();
 
         if($idUserType == 3){
             return view('welcome');
         }
+        
         if ($idUserType == 1) {
             return view ('welcome');
         }
-        $loggedBuyer = Buyer::where("user_id", $idUser)->first();
+
         $deposits = Deposit::where("buyer_id", $loggedBuyer->id)->get();
         $orders = Order::where(["buyer_id" => $loggedBuyer->id, "status_id" => 1, "status_id" => 2])->get();
         $displayExtract = self::toExtract($orders, $deposits);
         $balance = self::toBalance($orders, $deposits);
-        return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract ]);
+        return view("buyer.extract")->with(['balance' => $balance, 'displayExtract' => $displayExtract]);
+    }
+
+    public static function dinheiroGasto(){
+        $idUser = Auth::user()->id;
+        $loggedBuyer = Buyer::where("user_id", $idUser)->value('id');
+        $ordersEmEspera = Order::where(['buyer_id' => $loggedBuyer, 'status_id' => 1])->get();
+
+        $valorGasto = 0;
+        
+        foreach($ordersEmEspera as $order){
+            $valorGasto += $order->value;
+        }
+
+        return $valorGasto;
     }
 
     public function orderProduct(Request $r)
@@ -61,22 +77,16 @@ class BuyerController extends Controller
         $idbuyer = Buyer::where('user_id', $idUser)->value('id');
 
             //Não comprar quando a difereça do balance com valor das orders em espera
-            //for maior que o valor do produto
-            $ordersEmEspera = Order::where(['buyer_id' => $idbuyer, 'status_id' => 1])->get();
-
-            $valorGasto = 0;
-            foreach($ordersEmEspera as $order){
-                $valorGasto += $order->value;
-            }
+            //for maior que o valor do produto 
 
             $extract = BuyerController::extract();
             $balance = $extract["balance"];
-
+            $dinheiroGasto = self::dinheiroGasto();
 
             $value = Product::where('id' , $r['id'])->value('value');
             
-            if(($balance - $valorGasto) < $value){
-
+            if(($balance - $dinheiroGasto) < $value){
+                return view('buyer.error');
             }
 
         if ($balance < $value){
