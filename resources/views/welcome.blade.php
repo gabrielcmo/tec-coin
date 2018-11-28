@@ -13,7 +13,7 @@
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #ffffff;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -62,6 +62,11 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .m-left{
+                margin-left: 15px;
+            }
+
         </style>
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
@@ -87,6 +92,10 @@
                     <a href="https://github.com/laravel/laravel">Idealizadores</a>
                     <a href="https://laravel-news.com">Novidades</a>
                 </div>
+                <br><br>
+                <div class="flex-center">
+                 <p><h2>Patrocidado por:    </h1>  <img class="m-left" src="{{ url("images\logo.jpeg")}}" width="110px"></p>
+                 </div>
             </div>
         </div>
     </body>
