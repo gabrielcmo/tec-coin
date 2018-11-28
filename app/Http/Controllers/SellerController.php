@@ -65,10 +65,15 @@ class SellerController extends Controller
         $product->value = $r['value'];
         $product->description = $r['description'];
         $product->type_id = $r['type_id'];
-        $file = $r->file('image');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move('images', $filename);
-        $product->image = $filename;
+        if (!isset($r['image'])) {
+        $product->image = 'productplacehorlder.png';
+        }
+        else {
+            $file = $r->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move('images', $filename);
+            $product->image = $filename;
+        }
         $product->save();
         return view('home');
     }

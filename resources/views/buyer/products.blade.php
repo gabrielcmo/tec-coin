@@ -37,7 +37,6 @@
                                     <input type="hidden" name="id" value="{{ $products->id }}" id=""> <br/>
                                     <div class="card" style="width: 270px;">
                                     <img class="card-img-top" width="640px" height="250px" src="{{ url("/images/$products->image") }}" alt="Card image cap">
-                                            alt="Card image cap">
                                         <div class="card-body">
                                             <h5 class="card-title">{{$products->name}}</h5>
                                             <p class="card-text lead">{{$products->description}}</p>
