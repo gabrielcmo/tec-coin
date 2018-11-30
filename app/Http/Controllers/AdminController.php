@@ -60,7 +60,7 @@ class AdminController extends Controller
 
     public function sellers()
     {
-        $sellers = User::where('user_type_id', 3)->get();
+        $sellers = User::where('user_type_id', 3)->orderBy('name', 'ASC')->get();
         return view('admin.AllSellers', compact('sellers'));
     }
 
@@ -105,8 +105,10 @@ class AdminController extends Controller
         $users = 0;
         return view("admin.massregister")->with("users", $users);
     }
+    
     public function listAllUsers() {
-        $AllUsers = User::where('user_type_id', 2)->get();
-        return view ('admin.allUser' , compact('AllUsers'));
+        $AllUsers = User::where('user_type_id', 2)->orderBy('name', 'ASC')->get();
+        $countUsers = count($AllUsers);
+        return view ('admin.allUser')->with(compact('AllUsers', 'countUsers'));
     }
 }

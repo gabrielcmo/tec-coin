@@ -7,6 +7,9 @@
         <div class="col-md-12">
             <div>
                 <h1 class="display-4"><strong>Usuários cadastrados</strong></h1>
+                @if(isset($countUsers))
+                    <h2 class="display-6">Total: {{ $countUsers }}</h2>
+                @endif
                 <hr>
             </div>
             <br>
@@ -17,7 +20,7 @@
                 use App\Buyer;
             ?>
             @if (!isset($AllUsers))
-                <h1>Nenhum usuário</h1>
+                <h1>Nenhum usuário :´(</h1>
             @else
                 <table class="table table-striped">
                     <thead>

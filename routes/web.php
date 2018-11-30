@@ -4,6 +4,8 @@ Auth::routes();
 Route::get('/', function () { return view('welcome'); });
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('users/search', 'AdminController@search')->name('search');
+
 // admin
 Route::get('/register/mass', 'AdminController@massRegister');
 Route::get('/buyers', 'AdminController@buyers')->name('buyers');;
